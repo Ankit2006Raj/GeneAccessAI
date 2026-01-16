@@ -6,6 +6,9 @@
 [![Status](https://img.shields.io/badge/Status-Active-success.svg)]()
 
 > An advanced AI-powered platform for genetic health risk assessment, combining machine learning, NLP, and comprehensive genetic counseling to provide personalized health insights.
+<img width="1340" height="619" alt="image" src="https://github.com/user-attachments/assets/80f7b179-8a1d-4509-9acc-4f2c320387ff" />
+<img width="1330" height="635" alt="image" src="https://github.com/user-attachments/assets/f1f4f37b-88c2-47b3-905d-719a5c6d1676" />
+<img width="1347" height="636" alt="image" src="https://github.com/user-attachments/assets/d6ac195b-de1b-42e0-b73f-01f732f08538" />
 
 ## 🌟 Overview
 
