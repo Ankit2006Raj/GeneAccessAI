@@ -1,0 +1,250 @@
+{% extends "base.html" %}
+
+{% block title %}Ethnicity Risk Adjuster - GeneAccessAI{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header Section -->
+    <div class="text-center mb-5">
+        <div class="d-inline-block bg-purple-100 text-purple-600 px-4 py-2 rounded-full mb-3">
+            <i class="fas fa-globe-americas mr-2"></i>
+            <span class="badge bg-warning text-dark">PRO FEATURE</span>
+        </div>
+        <h1 class="display-4 fw-bold mb-3">
+            <i class="fas fa-globe-americas text-purple-600"></i>
+            Ethnicity-Aware Risk Adjuster
+        </h1>
+        <p class="lead text-muted">
+            Population-level genetic risk adjustment based on ethnicity-specific disease prevalence
+        </p>
+        <p class="text-muted">Similar to 23andMe's approach - Industry-grade precision</p>
+    </div>
+
+    <!-- Feature Info Cards -->
+    <div class="row mb-5">
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="bg-blue-100 text-blue-600 rounded-circle p-3 d-inline-block mb-3">
+                        <i class="fas fa-users fa-2x"></i>
+                    </div>
+                    <h5 class="fw-bold">7 Ethnicities</h5>
+                    <p class="text-muted small mb-0">Comprehensive coverage</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="bg-green-100 text-green-600 rounded-circle p-3 d-inline-block mb-3">
+                        <i class="fas fa-disease fa-2x"></i>
+                    </div>
+                    <h5 class="fw-bold">50+ Disorders</h5>
+                    <p class="text-muted small mb-0">Extensive database</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="bg-purple-100 text-purple-600 rounded-circle p-3 d-inline-block mb-3">
+                        <i class="fas fa-chart-bar fa-2x"></i>
+                    </div>
+                    <h5 class="fw-bold">Real Data</h5>
+                    <p class="text-muted small mb-0">CDC, WHO, NIH sources</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="bg-red-100 text-red-600 rounded-circle p-3 d-inline-block mb-3">
+                        <i class="fas fa-bolt fa-2x"></i>
+                    </div>
+                    <h5 class="fw-bold">~10ms</h5>
+                    <p class="text-muted small mb-0">Lightning fast</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Risk Adjustment Form -->
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-gradient-to-r from-purple-500 to-indigo-600 text-white py-4">
+                    <h4 class="mb-0">
+                        <i class="fas fa-calculator mr-2"></i>
+                        Calculate Ethnicity-Adjusted Risk
+                    </h4>
+                </div>
+                <div class="card-body p-4">
+                    <form id="ethnicityRiskForm">
+                        <!-- Base Risk Score -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Base Risk Score (%)</label>
+                            <input type="number" class="form-control form-control-lg" id="baseRiskScore" min="0"
+                                max="100" value="50" required>
+                            <small class="text-muted">Enter the initial risk score (0-100)</small>
+                        </div>
+
+                        <!-- Disorder Selection -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Genetic Disorder</label>
+                            <select class="form-select form-select-lg" id="disorder" required>
+                                <option value="">Select a disorder...</option>
+                                <option value="Sickle Cell Disease">Sickle Cell Disease</option>
+                                <option value="Thalassemia">Thalassemia</option>
+                                <option value="Cystic Fibrosis">Cystic Fibrosis</option>
+                                <option value="Tay-Sachs Disease">Tay-Sachs Disease</option>
+                                <option value="Hemochromatosis">Hemochromatosis</option>
+                                <option value="Type 2 Diabetes">Type 2 Diabetes</option>
+                                <option value="Huntington Disease">Huntington Disease</option>
+                            </select>
+                        </div>
+
+                        <!-- Ethnicity Selection -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Ethnicity</label>
+                            <select class="form-select form-select-lg" id="ethnicity" required>
+                                <option value="">Select ethnicity...</option>
+                                <option value="African">African / African American</option>
+                                <option value="South Asian">South Asian</option>
+                                <option value="Caucasian">Caucasian / European</option>
+                                <option value="Hispanic">Hispanic / Latino</option>
+                                <option value="East Asian">East Asian</option>
+                                <option value="Middle Eastern">Middle Eastern</option>
+                                <option value="Ashkenazi Jewish">Ashkenazi Jewish</option>
+                            </select>
+                        </div>
+
+                        <!-- Age and Gender -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Age</label>
+                                <input type="number" class="form-control form-control-lg" id="age" min="0" max="120"
+                                    value="30">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Gender</label>
+                                <select class="form-select form-select-lg" id="gender">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-lg btn-primary w-100">
+                            <i class="fas fa-calculator mr-2"></i>
+                            Calculate Adjusted Risk
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="mt-4" style="display: none;">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-header bg-success text-white py-3">
+                        <h5 class="mb-0">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            Ethnicity-Adjusted Risk Results
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <!-- Risk Comparison -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="text-center p-4 bg-light rounded">
+                                    <h6 class="text-muted mb-2">Base Risk</h6>
+                                    <h2 class="fw-bold text-primary mb-0" id="baseRiskDisplay">--</h2>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div
+                                    class="text-center p-4 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded">
+                                    <h6 class="mb-2">Adjusted Risk</h6>
+                                    <h2 class="fw-bold mb-0" id="adjustedRiskDisplay">--</h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Detailed Results -->
+                        <div id="detailedResults"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('ethnicityRiskForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const formData = {
+            base_risk_score: parseFloat(document.getElementById('baseRiskScore').value),
+            disorder: document.getElementById('disorder').value,
+            ethnicity: document.getElementById('ethnicity').value,
+            age: parseInt(document.getElementById('age').value),
+            gender: document.getElementById('gender').value
+        };
+
+        try {
+            const response = await fetch('/api/advanced/ethnicity-risk-adjustment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                displayResults(formData.base_risk_score, data.adjustment);
+            } else {
+                alert('Error: ' + data.error);
+            }
+        } catch (error) {
+            alert('Error calculating risk: ' + error.message);
+        }
+    });
+
+    function displayResults(baseRisk, adjustment) {
+        document.getElementById('baseRiskDisplay').textContent = baseRisk + '%';
+        document.getElementById('adjustedRiskDisplay').textContent = adjustment.adjusted_risk_score + '%';
+
+        const detailedHTML = `
+        <div class="alert alert-info">
+            <h6 class="fw-bold mb-3">
+                <i class="fas fa-info-circle mr-2"></i>
+                Adjustment Details
+            </h6>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <strong>Adjustment Factor:</strong> ${adjustment.adjustment_factor}x
+                </div>
+                <div class="col-md-6 mb-3">
+                    <strong>Relative Risk:</strong> ${adjustment.relative_risk}x
+                </div>
+                <div class="col-md-6 mb-3">
+                    <strong>Population Prevalence:</strong> ${adjustment.population_prevalence}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <strong>Confidence:</strong> 
+                    <span class="badge bg-${adjustment.confidence === 'High' ? 'success' : adjustment.confidence === 'Moderate' ? 'warning' : 'secondary'}">
+                        ${adjustment.confidence}
+                    </span>
+                </div>
+            </div>
+            <hr>
+            <p class="mb-0"><strong>Explanation:</strong> ${adjustment.explanation}</p>
+        </div>
+    `;
+
+        document.getElementById('detailedResults').innerHTML = detailedHTML;
+        document.getElementById('resultsSection').style.display = 'block';
+        document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+{% endblock %}

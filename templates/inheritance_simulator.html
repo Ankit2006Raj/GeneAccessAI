@@ -1,0 +1,274 @@
+{% extends "base.html" %}
+
+{% block title %}Inheritance Simulator - GeneAccessAI{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <div class="d-inline-block bg-emerald-100 text-emerald-600 px-4 py-2 rounded-full mb-3">
+            <i class="fas fa-baby mr-2"></i>
+            <span class="badge bg-warning text-dark">PRO FEATURE</span>
+        </div>
+        <h1 class="display-4 fw-bold mb-3">
+            <i class="fas fa-baby text-emerald-600"></i>
+            Inheritance Simulation Mode
+        </h1>
+        <p class="lead text-muted">Predict Baby's Genetic Risk</p>
+        <p class="text-muted">Family planning & reproductive counseling tool</p>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-calculator fa-2x text-blue-600 mb-2"></i>
+                    <h5 class="fw-bold">1000+ Simulations</h5>
+                    <p class="text-muted small mb-0">Monte Carlo analysis</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-table fa-2x text-green-600 mb-2"></i>
+                    <h5 class="fw-bold">Punnett Square</h5>
+                    <p class="text-muted small mb-0">Visual inheritance</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-chart-pie fa-2x text-purple-600 mb-2"></i>
+                    <h5 class="fw-bold">Probabilities</h5>
+                    <p class="text-muted small mb-0">Accurate predictions</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-user-md fa-2x text-red-600 mb-2"></i>
+                    <h5 class="fw-bold">Counseling</h5>
+                    <p class="text-muted small mb-0">Expert guidance</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-gradient-to-r from-emerald-500 to-teal-600 text-white py-4">
+                    <h4 class="mb-0"><i class="fas fa-users mr-2"></i>Offspring Risk Simulation</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form id="inheritanceForm">
+                        <h5 class="fw-bold mb-3">Parent 1</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Name</label>
+                                <input type="text" class="form-control" id="parent1Name" value="Parent 1" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Sex</label>
+                                <select class="form-select" id="parent1Sex" required>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Genetic Status</label>
+                            <select class="form-select" id="parent1Status" required>
+                                <option value="unaffected">Unaffected</option>
+                                <option value="carrier">Carrier</option>
+                                <option value="affected">Affected</option>
+                            </select>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <h5 class="fw-bold mb-3">Parent 2</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Name</label>
+                                <input type="text" class="form-control" id="parent2Name" value="Parent 2" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Sex</label>
+                                <select class="form-select" id="parent2Sex" required>
+                                    <option value="male">Male</option>
+                                    <option value="female" selected>Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Genetic Status</label>
+                            <select class="form-select" id="parent2Status" required>
+                                <option value="unaffected">Unaffected</option>
+                                <option value="carrier" selected>Carrier</option>
+                                <option value="affected">Affected</option>
+                            </select>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <h5 class="fw-bold mb-3">Disorder Information</h5>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Genetic Disorder</label>
+                            <select class="form-select" id="disorder" required>
+                                <option value="Cystic Fibrosis">Cystic Fibrosis</option>
+                                <option value="Sickle Cell Disease">Sickle Cell Disease</option>
+                                <option value="Huntington Disease">Huntington Disease</option>
+                                <option value="Hemophilia A">Hemophilia A</option>
+                                <option value="Duchenne Muscular Dystrophy">Duchenne Muscular Dystrophy</option>
+                                <option value="Tay-Sachs Disease">Tay-Sachs Disease</option>
+                                <option value="Marfan Syndrome">Marfan Syndrome</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-lg btn-primary w-100">
+                            <i class="fas fa-play mr-2"></i>Run Inheritance Simulation
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="resultsSection" class="mt-4" style="display: none;">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-header bg-success text-white py-3">
+                        <h5 class="mb-0"><i class="fas fa-chart-bar mr-2"></i>Simulation Results</h5>
+                    </div>
+                    <div class="card-body p-4" id="resultsContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('inheritanceForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const formData = {
+            parent1: {
+                name: document.getElementById('parent1Name').value,
+                sex: document.getElementById('parent1Sex').value,
+                genetic_status: document.getElementById('parent1Status').value
+            },
+            parent2: {
+                name: document.getElementById('parent2Name').value,
+                sex: document.getElementById('parent2Sex').value,
+                genetic_status: document.getElementById('parent2Status').value
+            },
+            disorder: document.getElementById('disorder').value,
+            num_simulations: 1000
+        };
+
+        try {
+            const response = await fetch('/api/advanced/inheritance/simulate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                displayResults(data);
+            } else {
+                alert('Error: ' + data.error);
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    });
+
+    function displayResults(data) {
+        let html = `
+        <div class="alert alert-info mb-4">
+            <h5 class="fw-bold mb-2">${data.disorder}</h5>
+            <p class="mb-0">
+                <strong>Inheritance Pattern:</strong> ${data.inheritance_pattern}<br>
+                <strong>Simulations Run:</strong> ${data.simulations_run.toLocaleString()}
+            </p>
+        </div>
+
+        <h5 class="fw-bold mb-3">Offspring Probabilities</h5>
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card border-0 bg-danger bg-opacity-10">
+                    <div class="card-body text-center">
+                        <h2 class="fw-bold text-danger">${data.probabilities.affected}%</h2>
+                        <p class="mb-0">Affected</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 bg-warning bg-opacity-10">
+                    <div class="card-body text-center">
+                        <h2 class="fw-bold text-warning">${data.probabilities.carrier}%</h2>
+                        <p class="mb-0">Carrier</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 bg-success bg-opacity-10">
+                    <div class="card-body text-center">
+                        <h2 class="fw-bold text-success">${data.probabilities.unaffected}%</h2>
+                        <p class="mb-0">Unaffected</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h5 class="fw-bold mb-3">Counseling Summary</h5>
+        <div class="alert alert-${data.counseling_summary.risk_level.includes('High') ? 'danger' : 'warning'}">
+            <h6 class="fw-bold">Risk Level: ${data.counseling_summary.risk_level}</h6>
+            <p class="mb-2">${data.counseling_summary.interpretation}</p>
+            <ul class="mb-0">
+                ${data.counseling_summary.key_points.map(point => `<li>${point}</li>`).join('')}
+            </ul>
+        </div>
+
+        <h5 class="fw-bold mb-3">Recommendations</h5>
+    `;
+
+        data.recommendations.forEach(rec => {
+            const priorityColor = rec.priority === 'Critical' ? 'danger' : rec.priority === 'High' ? 'warning' : 'info';
+            html += `
+            <div class="card mb-3 border-start border-${priorityColor} border-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h6 class="fw-bold mb-0">${rec.category}</h6>
+                        <span class="badge bg-${priorityColor}">${rec.priority}</span>
+                    </div>
+                    <p class="mb-2">${rec.recommendation}</p>
+                    <ul class="small mb-0">
+                        ${rec.details.map(detail => `<li>${detail}</li>`).join('')}
+                    </ul>
+                </div>
+            </div>
+        `;
+        });
+
+        document.getElementById('resultsContent').innerHTML = html;
+        document.getElementById('resultsSection').style.display = 'block';
+        document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+<style>
+    .text-emerald-600 {
+        color: #059669;
+    }
+
+    .bg-emerald-100 {
+        background-color: #d1fae5;
+    }
+
+    .bg-emerald-500 {
+        background-color: #10b981;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,60 @@
+"""
+Configuration file for GeneAccessAI
+"""
+
+import os
+from datetime import timedelta
+
+class Config:
+    """Base configuration"""
+    
+    # Flask
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
+    
+    # Database
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///geneaccess.db'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    
+    # Session
+    SESSION_COOKIE_SECURE = False  # Set to True in production with HTTPS
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE = 'Lax'
+    PERMANENT_SESSION_LIFETIME = timedelta(days=7)
+    
+    # File Upload
+    MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB max file size
+    
+    # ML Model
+    MODEL_PATH = 'models/genetic_model.pkl'
+    
+    # Reports
+    REPORTS_DIR = 'reports'
+    
+    # Application
+    APP_NAME = 'GeneAccessAI'
+    APP_VERSION = '1.0.0'
+    
+class DevelopmentConfig(Config):
+    """Development configuration"""
+    DEBUG = True
+    TESTING = False
+
+class ProductionConfig(Config):
+    """Production configuration"""
+    DEBUG = False
+    TESTING = False
+    SESSION_COOKIE_SECURE = True
+
+class TestingConfig(Config):
+    """Testing configuration"""
+    DEBUG = True
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'
+
+# Configuration dictionary
+config = {
+    'development': DevelopmentConfig,
+    'production': ProductionConfig,
+    'testing': TestingConfig,
+    'default': DevelopmentConfig
+}

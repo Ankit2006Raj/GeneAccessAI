@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}GeneAccessAI - AI-Powered Genetic Health Platform{% endblock %}</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        /* Advanced Features Highlight Styles */
+        .nav-link.position-relative {
+            transition: all 0.3s ease;
+        }
+
+        .nav-link.position-relative:hover {
+            transform: translateY(-2px);
+        }
+
+        .pulse-badge {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.8;
+                transform: scale(1.05);
+            }
+        }
+
+        /* Advanced Features Dropdown Styles */
+        .dropdown-menu {
+            border-radius: 12px;
+            padding: 0;
+            overflow: hidden;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-item {
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f8fafc !important;
+            border-left-color: #3b82f6;
+            transform: translateX(3px);
+        }
+
+        .feature-icon {
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .dropdown-header {
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* Hover effects for different feature types */
+        .hover\:bg-blue-50:hover {
+            background-color: #eff6ff !important;
+        }
+
+        .hover\:bg-green-50:hover {
+            background-color: #f0fdf4 !important;
+        }
+
+        .hover\:bg-purple-50:hover {
+            background-color: #faf5ff !important;
+        }
+
+        .hover\:bg-indigo-50:hover {
+            background-color: #eef2ff !important;
+        }
+
+        .hover\:bg-red-50:hover {
+            background-color: #fef2f2 !important;
+        }
+
+        .hover\:bg-teal-50:hover {
+            background-color: #f0fdfa !important;
+        }
+
+        .hover\:bg-orange-50:hover {
+            background-color: #fff7ed !important;
+        }
+
+        .hover\:bg-pink-50:hover {
+            background-color: #fdf2f8 !important;
+        }
+
+        .hover\:bg-emerald-50:hover {
+            background-color: #ecfdf5 !important;
+        }
+
+        /* New feature colors */
+        .bg-teal-100 {
+            background-color: #ccfbf1;
+        }
+
+        .text-teal-600 {
+            color: #0d9488;
+        }
+
+        .bg-orange-100 {
+            background-color: #ffedd5;
+        }
+
+        .text-orange-600 {
+            color: #ea580c;
+        }
+
+        .bg-pink-100 {
+            background-color: #fce7f3;
+        }
+
+        .text-pink-600 {
+            color: #db2777;
+        }
+
+        .bg-emerald-100 {
+            background-color: #d1fae5;
+        }
+
+        .text-emerald-600 {
+            color: #059669;
+        }
+
+        /* Badge animations */
+        .badge {
+            animation: subtle-pulse 3s infinite;
+        }
+
+        @keyframes subtle-pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 0 4px rgba(34, 197, 94, 0);
+            }
+        }
+
+        /* Mobile responsive adjustments */
+        @media (max-width: 991px) {
+            .navbar-nav .nav-link .badge {
+                display: inline-block;
+                margin-left: 0.5rem;
+            }
+
+            .dropdown-menu {
+                width: 100% !important;
+                min-width: auto !important;
+            }
+        }
+
+        /* Tooltip-like effect for feature descriptions */
+        .dropdown-item small {
+            display: block;
+            line-height: 1.3;
+            margin-top: 2px;
+        }
+
+        /* Floating Quick Access Menu */
+        .floating-quick-access {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .fab-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse-fab 2s infinite;
+        }
+
+        .fab-button:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 6px 30px rgba(102, 126, 234, 0.6);
+        }
+
+        .fab-button.active {
+            transform: rotate(45deg);
+        }
+
+        @keyframes pulse-fab {
+
+            0%,
+            100% {
+                box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 4px 30px rgba(102, 126, 234, 0.7);
+            }
+        }
+
+        .fab-menu {
+            position: absolute;
+            bottom: 75px;
+            right: 0;
+            width: 280px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .fab-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .fab-menu-header {
+            padding: 15px;
+            border-bottom: 1px solid #e5e7eb;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 16px 16px 0 0;
+            font-size: 14px;
+        }
+
+        .fab-menu-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: #374151;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .fab-menu-item:hover {
+            background-color: #f9fafb;
+            transform: translateX(-3px);
+            color: #374151;
+        }
+
+        .fab-menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .fab-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .fab-text {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .fab-text strong {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .fab-text small {
+            font-size: 11px;
+            color: #6b7280;
+        }
+
+        .fab-menu-footer {
+            background: #f9fafb;
+            border-radius: 0 0 16px 16px;
+            justify-content: center;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .fab-menu-footer:hover {
+            background: #f3f4f6;
+            color: #667eea;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .floating-quick-access {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .fab-button {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+
+            .fab-menu {
+                width: 260px;
+                bottom: 65px;
+            }
+        }
+
+        /* Hover lift effect */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body class="font-inter bg-gray-50">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gradient-to-r from-blue-600 to-indigo-700 shadow-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <i class="fas fa-dna text-white text-3xl mr-2"></i>
+                <span class="font-bold text-xl">GeneAccessAI</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fas fa-home mr-1"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about"><i class="fas fa-info-circle mr-1"></i> About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard"><i class="fas fa-chart-line mr-1"></i> Dashboard</a>
+                    </li>
+
+                    <!-- Advanced Features Dropdown - Industry Level -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle position-relative" href="#" id="advancedFeaturesDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-star mr-1"></i> Advanced Features
+                            <span class="badge bg-warning text-dark ms-1 pulse-badge"
+                                style="font-size: 0.6rem; vertical-align: super;">PRO</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0"
+                            aria-labelledby="advancedFeaturesDropdown" style="min-width: 320px;">
+                            <!-- Section Header -->
+                            <li class="dropdown-header bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-3">
+                                <i class="fas fa-rocket mr-2"></i>
+                                <strong>Industry-Level Features</strong>
+                            </li>
+
+                            <!-- Risk Timeline -->
+                            <li>
+                                <a class="dropdown-item py-3 hover:bg-blue-50" href="/risk-timeline">
+                                    <div class="d-flex align-items-start">
+                                        <div class="feature-icon bg-blue-100 text-blue-600 rounded-circle p-2 me-3"
+                                            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-chart-line"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <div class="fw-bold text-dark">Risk Timeline</div>
+                                            <small class="text-muted">Future risk projections & what-if
+                                                scenarios</small>
+                                        </div>
+                                        <span class="badge bg-success ms-2" style="font-size: 0.6rem;">NEW</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <!-- Family Pedigree -->
+                            <li>
+                                <a class="dropdown-item py-3 hover:bg-green-50" href="/family-pedigree">
+                                    <div class="d-flex align-items-start">
+                                        <div class="feature-icon bg-green-100 text-green-600 rounded-circle p-2 me-3"
+                                            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-sitemap"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <div class="fw-bold text-dark">Family Pedigree</div>
+                                            <small class="text-muted">AI-powered inheritance pattern analysis</small>
+                                        </div>
+                                        <span class="badge bg-success ms-2" style="font-size: 0.6rem;">NEW</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <!-- Ethnicity Risk Adjuster -->
+                            <li>
+                                <a class="dropdown-item py-3 hover:bg-purple-50" href="/ethnicity-risk">
+                                    <div class="d-flex align-items-start">
+                                        <div class="feature-icon bg-purple-100 text-purple-600 rounded-circle p-2 me-3"
+                                            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-globe-americas"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <div class="fw-bold text-dark">Ethnicity Risk Adjuster</div>
+                                            <small class="text-muted">Population-based risk adjustment</small>
+                                        </div>
+                                        <span class="badge bg-warning text-dark ms-2"
+                                            style="font-size: 0.6rem;">PRO</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <!-- Genomic Profile -->
+                            <li>
+                                <a class="dropdown-item py-3 hover:bg-indigo-50" href="/genomic-profile">
+                                    <div class="d-flex align-items-start">
+                                        <div class="feature-icon bg-indigo-100 text-indigo-600 rounded-circle p-2 me-3"
+                                            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-dna"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <div class="fw-bold text-dark">Genomic Profile</div>
+                                            <small class="text-muted">AI genetic insights without DNA testing</small>
+                                        </div>
+                                        <span class="badge bg-warning text-dark ms-2"
+                                            style="font-size: 0.6rem;">PRO</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <!-- Clinical Tests -->
+                            <li>
+                                <a class="dropdown-item py-3 hover:bg-red-50" href="/clinical-tests">
+                                    <div class="d-flex align-items-start">
+                                        <div class="feature-icon bg-red-100 text-red-600 rounded-circle p-2 me-3"
+                                            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-flask"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <div class="fw-bold text-dark">Clinical Test Recommender</div>
+                                            <small class="text-muted">AI lab order assistant with cost estimates</small>
+                                        </div>
+                                        <span class="badge bg-warning text-dark ms-2"
+                                            style="font-size: 0.6rem;">PRO</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <!-- Psychosocial Risk -->
+                            <li>
+                                <a class="dropdown-item py-3 hover:bg-teal-50" href="/psychosocial-risk">
+                                    <div class="d-flex align-items-start">
+                                        <div class="feature-icon bg-teal-100 text-teal-600 rounded-circle p-2 me-3"
+                                            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-brain"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <div class="fw-bold text-dark">Psychosocial Risk Modulator</div>
+                                            <small class="text-muted">Mental health × genetics interaction</small>
+                                        </div>
+                                        <span class="badge bg-warning text-dark ms-2"
+                                            style="font-size: 0.6rem;">PRO</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <!-- Clinical Knowledge -->
+                            <li>
+                                <a class="dropdown-item py-3 hover:bg-orange-50" href="/clinical-knowledge">
+                                    <div class="d-flex align-items-start">
+                                        <div class="feature-icon bg-orange-100 text-orange-600 rounded-circle p-2 me-3"
+                                            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-book-medical"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <div class="fw-bold text-dark">Clinical Knowledge Updater</div>
+                                            <small class="text-muted">Real-time medical research sync</small>
+                                        </div>
+                                        <span class="badge bg-warning text-dark ms-2"
+                                            style="font-size: 0.6rem;">PRO</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <!-- Drug Reactions -->
+                            <li>
+                                <a class="dropdown-item py-3 hover:bg-pink-50" href="/drug-reactions">
+                                    <div class="d-flex align-items-start">
+                                        <div class="feature-icon bg-pink-100 text-pink-600 rounded-circle p-2 me-3"
+                                            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-pills"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <div class="fw-bold text-dark">Drug Reaction Predictor</div>
+                                            <small class="text-muted">Pharmacogenetic safety assessment</small>
+                                        </div>
+                                        <span class="badge bg-warning text-dark ms-2"
+                                            style="font-size: 0.6rem;">PRO</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <!-- Inheritance Simulator -->
+                            <li>
+                                <a class="dropdown-item py-3 hover:bg-emerald-50" href="/inheritance-simulator">
+                                    <div class="d-flex align-items-start">
+                                        <div class="feature-icon bg-emerald-100 text-emerald-600 rounded-circle p-2 me-3"
+                                            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-baby"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <div class="fw-bold text-dark">Inheritance Simulator</div>
+                                            <small class="text-muted">Predict baby's genetic risk</small>
+                                        </div>
+                                        <span class="badge bg-warning text-dark ms-2"
+                                            style="font-size: 0.6rem;">PRO</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <!-- View All Features -->
+                            <li>
+                                <a class="dropdown-item text-center py-2 bg-light" href="/advanced-features">
+                                    <strong class="text-primary">
+                                        <i class="fas fa-arrow-right mr-1"></i> View All Features
+                                    </strong>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-light text-blue-600 px-4 ms-2" href="/assessment">
+                            <i class="fas fa-stethoscope mr-1"></i> Start Assessment
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Floating Quick Access Menu -->
+    <div class="floating-quick-access">
+        <button class="fab-button" id="fabButton" title="Quick Access to Advanced Features">
+            <i class="fas fa-star"></i>
+        </button>
+        <div class="fab-menu" id="fabMenu">
+            <div class="fab-menu-header">
+                <strong>Advanced Features</strong>
+                <span class="badge bg-warning text-dark ms-2" style="font-size: 0.6rem;">PRO</span>
+            </div>
+            <a href="/ethnicity-risk" class="fab-menu-item">
+                <div class="fab-icon bg-purple-100 text-purple-600">
+                    <i class="fas fa-globe-americas"></i>
+                </div>
+                <div class="fab-text">
+                    <strong>Ethnicity Risk</strong>
+                    <small>Population adjustment</small>
+                </div>
+            </a>
+            <a href="/genomic-profile" class="fab-menu-item">
+                <div class="fab-icon bg-indigo-100 text-indigo-600">
+                    <i class="fas fa-dna"></i>
+                </div>
+                <div class="fab-text">
+                    <strong>Genomic Profile</strong>
+                    <small>AI genetic insights</small>
+                </div>
+            </a>
+            <a href="/clinical-tests" class="fab-menu-item">
+                <div class="fab-icon bg-red-100 text-red-600">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <div class="fab-text">
+                    <strong>Clinical Tests</strong>
+                    <small>Lab recommendations</small>
+                </div>
+            </a>
+            <a href="/risk-timeline" class="fab-menu-item">
+                <div class="fab-icon bg-blue-100 text-blue-600">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="fab-text">
+                    <strong>Risk Timeline</strong>
+                    <small>Future projections</small>
+                </div>
+            </a>
+            <a href="/family-pedigree" class="fab-menu-item">
+                <div class="fab-icon bg-green-100 text-green-600">
+                    <i class="fas fa-sitemap"></i>
+                </div>
+                <div class="fab-text">
+                    <strong>Family Pedigree</strong>
+                    <small>Inheritance analysis</small>
+                </div>
+            </a>
+            <a href="/psychosocial-risk" class="fab-menu-item">
+                <div class="fab-icon bg-teal-100 text-teal-600">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="fab-text">
+                    <strong>Psychosocial Risk</strong>
+                    <small>Mental health × genetics</small>
+                </div>
+            </a>
+            <a href="/clinical-knowledge" class="fab-menu-item">
+                <div class="fab-icon bg-orange-100 text-orange-600">
+                    <i class="fas fa-book-medical"></i>
+                </div>
+                <div class="fab-text">
+                    <strong>Clinical Knowledge</strong>
+                    <small>Research updates</small>
+                </div>
+            </a>
+            <a href="/drug-reactions" class="fab-menu-item">
+                <div class="fab-icon bg-pink-100 text-pink-600">
+                    <i class="fas fa-pills"></i>
+                </div>
+                <div class="fab-text">
+                    <strong>Drug Reactions</strong>
+                    <small>Pharmacogenetics</small>
+                </div>
+            </a>
+            <a href="/inheritance-simulator" class="fab-menu-item">
+                <div class="fab-icon bg-emerald-100 text-emerald-600">
+                    <i class="fas fa-baby"></i>
+                </div>
+                <div class="fab-text">
+                    <strong>Inheritance Simulator</strong>
+                    <small>Baby risk prediction</small>
+                </div>
+            </a>
+            <a href="/advanced-features" class="fab-menu-item fab-menu-footer">
+                <i class="fas fa-arrow-right mr-2"></i>
+                <strong>View All 9 Features</strong>
+            </a>
+        </div>
+    </div>
+
+    <!-- Modern Footer with Developed By Section -->
+    <footer class="new-modern-footer position-relative overflow-hidden mt-16">
+        <div class="container py-5">
+            <!-- Main Footer Grid -->
+            <div class="row g-4 mb-5">
+                <!-- About Section -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-section">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="footer-logo-icon me-3">
+                                <i class="fas fa-dna"></i>
+                            </div>
+                            <h3 class="footer-brand-title mb-0">GeneAccessAI</h3>
+                        </div>
+                        <p class="footer-description">
+                            AI-powered genetic disorder risk prediction platform making healthcare accessible through
+                            advanced machine learning and personalized insights.
+                        </p>
+                        <div class="footer-stats mt-4">
+                            <div class="stat-item">
+                                <div class="stat-number">10K+</div>
+                                <div class="stat-label">Users</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">95%</div>
+                                <div class="stat-label">Accuracy</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">24/7</div>
+                                <div class="stat-label">Support</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-section">
+                        <h5 class="footer-heading">Quick Links</h5>
+                        <ul class="footer-menu">
+                            <li><a href="/"><i class="fas fa-angle-right"></i> Home</a></li>
+                            <li><a href="/about"><i class="fas fa-angle-right"></i> About</a></li>
+                            <li><a href="/assessment"><i class="fas fa-angle-right"></i> Assessment</a></li>
+                            <li><a href="/dashboard"><i class="fas fa-angle-right"></i> Dashboard</a></li>
+                            <li><a href="/risk-timeline"><i class="fas fa-angle-right"></i> Risk Timeline <span
+                                        class="badge bg-success" style="font-size: 0.6rem;">NEW</span></a></li>
+                            <li><a href="/family-pedigree"><i class="fas fa-angle-right"></i> Pedigree <span
+                                        class="badge bg-success" style="font-size: 0.6rem;">NEW</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Features -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-section">
+                        <h5 class="footer-heading">Features</h5>
+                        <ul class="footer-features">
+                            <li><i class="fas fa-check-circle"></i> AI Risk Prediction</li>
+                            <li><i class="fas fa-check-circle"></i> Symptom Analysis</li>
+                            <li><i class="fas fa-check-circle"></i> PDF Reports</li>
+                            <li><i class="fas fa-check-circle"></i> Multi-Language</li>
+                            <li><i class="fas fa-check-circle"></i> Genetic Counseling</li>
+                            <li><i class="fas fa-check-circle text-success"></i> <strong>Risk Timeline</strong> <span
+                                    class="badge bg-success" style="font-size: 0.6rem;">NEW</span></li>
+                            <li><i class="fas fa-check-circle text-success"></i> <strong>Family Pedigree</strong> <span
+                                    class="badge bg-success" style="font-size: 0.6rem;">NEW</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Developed By Section -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-section">
+                        <h5 class="footer-heading">Developed By</h5>
+                        <div class="developer-card-compact">
+                            <div class="developer-info-compact">
+                                <h4 class="developer-name-compact">Ankit Raj</h4>
+                                <p class="developer-role-compact">AI & ML Engineer</p>
+
+                                <div class="developer-social-compact">
+                                    <a href="https://github.com/Ankit2006Raj" target="_blank"
+                                        class="dev-social-link-compact" title="GitHub">
+                                        <i class="fab fa-github"></i>
+                                    </a>
+                                    <a href="https://www.linkedin.com/in/ankit-raj-226a36309" target="_blank"
+                                        class="dev-social-link-compact" title="LinkedIn">
+                                        <i class="fab fa-linkedin-in"></i>
+                                    </a>
+                                    <a href="mailto:ankit9905163014@gmail.com" class="dev-social-link-compact"
+                                        title="Email">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <p class="copyright-text">
+                            © 2025 <span class="brand-highlight">GeneAccessAI</span>. All rights reserved.
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="tech-badges">
+                            <span class="tech-badge-item"><i class="fab fa-python"></i> Python</span>
+                            <span class="tech-badge-item"><i class="fas fa-flask"></i> Flask</span>
+                            <span class="tech-badge-item"><i class="fas fa-brain"></i> ML</span>
+                            <span class="tech-badge-item"><i class="fas fa-robot"></i> AI</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Background Elements -->
+        <div class="footer-bg-elements">
+            <div class="bg-circle bg-circle-1"></div>
+            <div class="bg-circle bg-circle-2"></div>
+            <div class="bg-circle bg-circle-3"></div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <!-- Floating Quick Access Menu Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const fabButton = document.getElementById('fabButton');
+            const fabMenu = document.getElementById('fabMenu');
+
+            if (fabButton && fabMenu) {
+                fabButton.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    fabMenu.classList.toggle('show');
+                    fabButton.classList.toggle('active');
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function (e) {
+                    if (!fabButton.contains(e.target) && !fabMenu.contains(e.target)) {
+                        fabMenu.classList.remove('show');
+                        fabButton.classList.remove('active');
+                    }
+                });
+
+                // Prevent menu clicks from closing the menu
+                fabMenu.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                });
+            }
+        });
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

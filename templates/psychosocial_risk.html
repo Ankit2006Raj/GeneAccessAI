@@ -1,0 +1,357 @@
+{% extends "base.html" %}
+
+{% block title %}Psychosocial Risk Modulator - GeneAccessAI{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="text-center mb-5">
+        <div class="d-inline-block bg-teal-100 text-teal-600 px-4 py-2 rounded-full mb-3">
+            <i class="fas fa-brain mr-2"></i>
+            <span class="badge bg-warning text-dark">PRO FEATURE</span>
+        </div>
+        <h1 class="display-4 fw-bold mb-3">
+            <i class="fas fa-brain text-teal-600"></i>
+            Psychosocial Risk Modulator
+        </h1>
+        <p class="lead text-muted">
+            Mental Health × Genetics × Lifestyle Tri-Model Analysis
+        </p>
+        <p class="text-muted">Holistic assessment integrating psychology and genetics</p>
+    </div>
+
+    <!-- Feature Cards -->
+    <div class="row mb-5">
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-heartbeat fa-3x text-teal-600 mb-3"></i>
+                    <h5 class="fw-bold">Stress Impact</h5>
+                    <p class="text-muted small">Quantify stress effects on genetic expression</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-head-side-virus fa-3x text-purple-600 mb-3"></i>
+                    <h5 class="fw-bold">Mental Health</h5>
+                    <p class="text-muted small">Depression/anxiety influence on heredity</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-running fa-3x text-green-600 mb-3"></i>
+                    <h5 class="fw-bold">Lifestyle Factors</h5>
+                    <p class="text-muted small">Sleep, social support, coping skills</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-project-diagram fa-3x text-blue-600 mb-3"></i>
+                    <h5 class="fw-bold">Tri-Model</h5>
+                    <p class="text-muted small">Integrated 3-way interaction analysis</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-gradient-to-r from-teal-500 to-cyan-600 text-white py-4">
+                    <h4 class="mb-0">
+                        <i class="fas fa-clipboard-check mr-2"></i>
+                        Psychosocial Risk Assessment
+                    </h4>
+                </div>
+                <div class="card-body p-4">
+                    <form id="psychosocialForm">
+                        <!-- Genetic Data -->
+                        <h5 class="fw-bold mb-3">
+                            <i class="fas fa-dna mr-2"></i>Genetic Component
+                        </h5>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Base Genetic Risk Score (%)</label>
+                                <input type="number" class="form-control" id="baseRisk" min="0" max="100" value="50"
+                                    required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Disorder Category</label>
+                                <select class="form-select" id="disorderCategory" required>
+                                    <option value="neurological">Neurological</option>
+                                    <option value="cardiovascular">Cardiovascular</option>
+                                    <option value="metabolic">Metabolic</option>
+                                    <option value="immune_disorders">Immune Disorders</option>
+                                    <option value="gastrointestinal">Gastrointestinal</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <!-- Mental Health Component -->
+                        <h5 class="fw-bold mb-3">
+                            <i class="fas fa-head-side-virus mr-2"></i>Mental Health Component
+                        </h5>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Current Stress Level</label>
+                                <select class="form-select" id="stressLevel" required>
+                                    <option value="none">None</option>
+                                    <option value="low">Low</option>
+                                    <option value="moderate" selected>Moderate</option>
+                                    <option value="high">High</option>
+                                    <option value="severe">Severe</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Mental Health Conditions</label>
+                                <select class="form-select" id="mentalConditions" multiple size="4">
+                                    <option value="depression">Depression</option>
+                                    <option value="anxiety">Anxiety</option>
+                                    <option value="ptsd">PTSD</option>
+                                    <option value="bipolar">Bipolar Disorder</option>
+                                </select>
+                                <small class="text-muted">Hold Ctrl/Cmd to select multiple</small>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <!-- Lifestyle Component -->
+                        <h5 class="fw-bold mb-3">
+                            <i class="fas fa-running mr-2"></i>Lifestyle Component
+                        </h5>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Sleep Quality</label>
+                                <select class="form-select" id="sleepQuality" required>
+                                    <option value="poor">Poor</option>
+                                    <option value="fair" selected>Fair</option>
+                                    <option value="good">Good</option>
+                                    <option value="excellent">Excellent</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Social Support</label>
+                                <select class="form-select" id="socialSupport" required>
+                                    <option value="isolated">Isolated</option>
+                                    <option value="limited">Limited</option>
+                                    <option value="moderate" selected>Moderate</option>
+                                    <option value="strong">Strong</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Work Stress</label>
+                                <select class="form-select" id="workStress" required>
+                                    <option value="overwhelming">Overwhelming</option>
+                                    <option value="high">High</option>
+                                    <option value="moderate" selected>Moderate</option>
+                                    <option value="low">Low</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Coping Mechanisms</label>
+                                <select class="form-select" id="copingMechanisms" required>
+                                    <option value="poor">Poor</option>
+                                    <option value="developing">Developing</option>
+                                    <option value="adequate" selected>Adequate</option>
+                                    <option value="strong">Strong</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-lg btn-primary w-100">
+                            <i class="fas fa-calculator mr-2"></i>
+                            Calculate Psychosocial-Adjusted Risk
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="mt-4" style="display: none;">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-header bg-success text-white py-3">
+                        <h5 class="mb-0">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            Tri-Model Analysis Results
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div id="resultsContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('psychosocialForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const selectedConditions = Array.from(document.getElementById('mentalConditions').selectedOptions)
+            .map(option => option.value);
+
+        const formData = {
+            base_risk_score: parseFloat(document.getElementById('baseRisk').value),
+            disorder_category: document.getElementById('disorderCategory').value,
+            mental_health: {
+                stress_level: document.getElementById('stressLevel').value,
+                conditions: selectedConditions
+            },
+            lifestyle: {
+                sleep_quality: document.getElementById('sleepQuality').value,
+                social_support: document.getElementById('socialSupport').value,
+                work_stress: document.getElementById('workStress').value,
+                coping_mechanisms: document.getElementById('copingMechanisms').value
+            }
+        };
+
+        try {
+            const response = await fetch('/api/advanced/psychosocial/adjust-risk', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                displayResults(data);
+            } else {
+                alert('Error: ' + data.error);
+            }
+        } catch (error) {
+            alert('Error calculating risk: ' + error.message);
+        }
+    });
+
+    function displayResults(data) {
+        const riskChange = data.risk_change >= 0 ? '+' + data.risk_change : data.risk_change;
+        const changeColor = data.risk_change >= 0 ? 'danger' : 'success';
+
+        let html = `
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="text-center p-4 bg-light rounded">
+                    <h6 class="text-muted mb-2">Base Genetic Risk</h6>
+                    <h2 class="fw-bold text-primary mb-0">${data.base_risk_score}%</h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center p-4 bg-gradient-to-r from-teal-500 to-cyan-600 text-white rounded">
+                    <h6 class="mb-2">Adjusted Risk</h6>
+                    <h2 class="fw-bold mb-0">${data.adjusted_risk_score}%</h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center p-4 bg-${changeColor} bg-opacity-10 rounded">
+                    <h6 class="text-muted mb-2">Risk Change</h6>
+                    <h2 class="fw-bold text-${changeColor} mb-0">${riskChange}%</h2>
+                </div>
+            </div>
+        </div>
+
+        <h5 class="fw-bold mb-3">Impact Multipliers</h5>
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card border-0 bg-light">
+                    <div class="card-body">
+                        <h6 class="fw-bold">Stress Impact</h6>
+                        <h4 class="text-primary">${data.multipliers.stress_impact}x</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 bg-light">
+                    <div class="card-body">
+                        <h6 class="fw-bold">Mental Health Impact</h6>
+                        <h4 class="text-purple-600">${data.multipliers.mental_health_impact}x</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 bg-light">
+                    <div class="card-body">
+                        <h6 class="fw-bold">Lifestyle Impact</h6>
+                        <h4 class="text-green-600">${data.multipliers.lifestyle_impact}x</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h5 class="fw-bold mb-3">Holistic Health Score</h5>
+        <div class="alert alert-info">
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <h2 class="fw-bold mb-0">${data.holistic_score.score}</h2>
+                    <p class="mb-0">${data.holistic_score.rating}</p>
+                </div>
+                <div class="col-md-9">
+                    <p class="mb-0">
+                        <strong>Protective Factors:</strong> ${data.holistic_score.protective_count} | 
+                        <strong>Risk Factors:</strong> ${data.holistic_score.risk_count} | 
+                        <strong>Balance:</strong> ${data.holistic_score.balance}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <h5 class="fw-bold mb-3">Recommendations</h5>
+    `;
+
+        data.recommendations.forEach(rec => {
+            const priorityColor = rec.priority === 'High' ? 'danger' : 'warning';
+            html += `
+            <div class="card mb-3 border-start border-${priorityColor} border-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h6 class="fw-bold mb-0">${rec.category}</h6>
+                        <span class="badge bg-${priorityColor}">${rec.priority}</span>
+                    </div>
+                    <p class="mb-2">${rec.recommendation}</p>
+                    <ul class="small mb-0">
+                        ${rec.actions.map(action => `<li>${action}</li>`).join('')}
+                    </ul>
+                </div>
+            </div>
+        `;
+        });
+
+        document.getElementById('resultsContent').innerHTML = html;
+        document.getElementById('resultsSection').style.display = 'block';
+        document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+<style>
+    .text-teal-600 {
+        color: #0d9488;
+    }
+
+    .bg-teal-100 {
+        background-color: #ccfbf1;
+    }
+
+    .bg-teal-500 {
+        background-color: #14b8a6;
+    }
+
+    .text-purple-600 {
+        color: #9333ea;
+    }
+
+    .text-green-600 {
+        color: #16a34a;
+    }
+</style>
+{% endblock %}

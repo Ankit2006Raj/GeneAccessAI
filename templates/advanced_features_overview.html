@@ -1,0 +1,308 @@
+{% extends "base.html" %}
+
+{% block title %}Advanced Features - GeneAccessAI{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="text-center mb-5">
+        <div class="d-inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-full mb-4">
+            <i class="fas fa-rocket mr-2"></i>
+            <span class="fw-bold">INDUSTRY-LEVEL FEATURES</span>
+        </div>
+        <h1 class="display-3 fw-bold mb-3">
+            Advanced Genetic Analysis
+        </h1>
+        <p class="lead text-muted mb-4">
+            Professional-grade features that rival commercial platforms like 23andMe
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <span class="badge bg-success px-3 py-2">
+                <i class="fas fa-check-circle mr-1"></i> 5 Pro Features
+            </span>
+            <span class="badge bg-info px-3 py-2">
+                <i class="fas fa-bolt mr-1"></i> AI-Powered
+            </span>
+            <span class="badge bg-warning text-dark px-3 py-2">
+                <i class="fas fa-star mr-1"></i> Industry-Grade
+            </span>
+        </div>
+    </div>
+
+    <!-- Features Grid -->
+    <div class="row g-4 mb-5">
+        <!-- Risk Timeline -->
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-lg h-100 hover-lift">
+                <div class="card-header bg-gradient-to-r from-blue-500 to-blue-600 text-white py-4">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h4 class="mb-1">
+                                <i class="fas fa-chart-line mr-2"></i>
+                                Risk Timeline
+                            </h4>
+                            <small>Future Risk Projections</small>
+                        </div>
+                        <span class="badge bg-success">NEW</span>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-muted mb-4">
+                        AI-generated personal genetic risk timeline with future projections, lifestyle simulations, and
+                        what-if scenario analysis.
+                    </p>
+                    <ul class="list-unstyled mb-4">
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success mr-2"></i>
+                            5, 10, 20-year risk projections
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success mr-2"></i>
+                            Lifestyle impact simulations
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success mr-2"></i>
+                            What-if scenario analysis
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success mr-2"></i>
+                            Critical milestone identification
+                        </li>
+                    </ul>
+                    <a href="/risk-timeline" class="btn btn-primary w-100">
+                        <i class="fas fa-arrow-right mr-2"></i>
+                        Explore Risk Timeline
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Family Pedigree -->
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-lg h-100 hover-lift">
+                <div class="card-header bg-gradient-to-r from-green-500 to-green-600 text-white py-4">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h4 class="mb-1">
+                                <i class="fas fa-sitemap mr-2"></i>
+                                Family Pedigree AI
+                            </h4>
+                            <small>Inheritance Pattern Analysis</small>
+                        </div>
+                        <span class="badge bg-success">NEW</span>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-muted mb-4">
+                        Automatic pedigree chart builder with AI-powered genetic inheritance pattern detection and risk
+                        colorization.
+                    </p>
+                    <ul class="list-unstyled mb-4">
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success mr-2"></i>
+                            Multi-generation family trees
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success mr-2"></i>
+                            5 inheritance pattern detection
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success mr-2"></i>
+                            Risk color coding
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success mr-2"></i>
+                            Carrier probability calculations
+                        </li>
+                    </ul>
+                    <a href="/family-pedigree" class="btn btn-success w-100">
+                        <i class="fas fa-arrow-right mr-2"></i>
+                        Build Pedigree Chart
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ethnicity Risk Adjuster -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-lg h-100 hover-lift">
+                <div class="card-header bg-gradient-to-r from-purple-500 to-purple-600 text-white py-4">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h5 class="mb-1">
+                                <i class="fas fa-globe-americas mr-2"></i>
+                                Ethnicity Risk
+                            </h5>
+                        </div>
+                        <span class="badge bg-warning text-dark">PRO</span>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-muted mb-3">
+                        Population-level genetic risk adjustment based on ethnicity-specific disease prevalence.
+                    </p>
+                    <ul class="list-unstyled mb-4 small">
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success mr-2"></i>
+                            7 major ethnicities
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success mr-2"></i>
+                            50+ disorders
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success mr-2"></i>
+                            Real CDC/WHO data
+                        </li>
+                    </ul>
+                    <a href="/ethnicity-risk" class="btn btn-purple w-100"
+                        style="background-color: #9333ea; color: white;">
+                        <i class="fas fa-arrow-right mr-2"></i>
+                        Adjust Risk
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Genomic Profile -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-lg h-100 hover-lift">
+                <div class="card-header bg-gradient-to-r from-indigo-500 to-indigo-600 text-white py-4">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h5 class="mb-1">
+                                <i class="fas fa-dna mr-2"></i>
+                                Genomic Profile
+                            </h5>
+                        </div>
+                        <span class="badge bg-warning text-dark">PRO</span>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-muted mb-3">
+                        AI-powered synthetic genomic profile generation without DNA testing.
+                    </p>
+                    <ul class="list-unstyled mb-4 small">
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success mr-2"></i>
+                            12+ gene analysis
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success mr-2"></i>
+                            Pathway mapping
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success mr-2"></i>
+                            Pharmacogenomics
+                        </li>
+                    </ul>
+                    <a href="/genomic-profile" class="btn btn-indigo w-100"
+                        style="background-color: #4f46e5; color: white;">
+                        <i class="fas fa-arrow-right mr-2"></i>
+                        Generate Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Clinical Tests -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-lg h-100 hover-lift">
+                <div class="card-header bg-gradient-to-r from-red-500 to-red-600 text-white py-4">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h5 class="mb-1">
+                                <i class="fas fa-flask mr-2"></i>
+                                Clinical Tests
+                            </h5>
+                        </div>
+                        <span class="badge bg-warning text-dark">PRO</span>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-muted mb-3">
+                        AI lab order assistant with test recommendations and cost estimates.
+                    </p>
+                    <ul class="list-unstyled mb-4 small">
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success mr-2"></i>
+                            30+ clinical tests
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success mr-2"></i>
+                            Cost estimates
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success mr-2"></i>
+                            Insurance predictions
+                        </li>
+                    </ul>
+                    <a href="/clinical-tests" class="btn btn-danger w-100">
+                        <i class="fas fa-arrow-right mr-2"></i>
+                        Get Recommendations
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Why These Features Matter -->
+    <div class="card border-0 shadow-lg mb-5">
+        <div class="card-body p-5">
+            <h2 class="text-center fw-bold mb-4">
+                <i class="fas fa-star text-warning mr-2"></i>
+                Why These Features Are Industry-Level
+            </h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="text-center">
+                        <div class="bg-blue-100 text-blue-600 rounded-circle p-4 d-inline-block mb-3">
+                            <i class="fas fa-database fa-2x"></i>
+                        </div>
+                        <h5 class="fw-bold">Real Data</h5>
+                        <p class="text-muted">Uses actual epidemiological data from CDC, WHO, and NIH</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="text-center">
+                        <div class="bg-green-100 text-green-600 rounded-circle p-4 d-inline-block mb-3">
+                            <i class="fas fa-microscope fa-2x"></i>
+                        </div>
+                        <h5 class="fw-bold">Scientific Accuracy</h5>
+                        <p class="text-muted">Based on published research and clinical guidelines</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="text-center">
+                        <div class="bg-purple-100 text-purple-600 rounded-circle p-4 d-inline-block mb-3">
+                            <i class="fas fa-hospital fa-2x"></i>
+                        </div>
+                        <h5 class="fw-bold">Clinical Practicality</h5>
+                        <p class="text-muted">Actionable recommendations for healthcare providers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="text-center">
+        <h3 class="fw-bold mb-4">Ready to Experience Professional Genetic Analysis?</h3>
+        <a href="/assessment" class="btn btn-lg btn-primary px-5">
+            <i class="fas fa-stethoscope mr-2"></i>
+            Start Your Assessment
+        </a>
+    </div>
+</div>
+
+<style>
+    .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+    }
+</style>
+{% endblock %}

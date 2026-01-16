@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+
+{% block title %}Genomic Profile Generator - GeneAccessAI{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="text-center mb-5">
+        <div class="d-inline-block bg-indigo-100 text-indigo-600 px-4 py-2 rounded-full mb-3">
+            <i class="fas fa-dna mr-2"></i>
+            <span class="badge bg-warning text-dark">PRO FEATURE</span>
+        </div>
+        <h1 class="display-4 fw-bold mb-3">
+            <i class="fas fa-dna text-indigo-600"></i>
+            Synthetic Genomic Profile Generator
+        </h1>
+        <p class="lead text-muted">
+            AI-powered genetic insights without DNA testing
+        </p>
+        <p class="text-muted">Bridges "no DNA" with "genetic-like insights" - Extremely futuristic</p>
+    </div>
+
+    <!-- Feature Cards -->
+    <div class="row mb-5">
+        <div class="col-md-4 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-dna fa-3x text-indigo-600 mb-3"></i>
+                    <h5 class="fw-bold">12+ Genes</h5>
+                    <p class="text-muted small">Carrier probability analysis</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-project-diagram fa-3x text-purple-600 mb-3"></i>
+                    <h5 class="fw-bold">11 Pathways</h5>
+                    <p class="text-muted small">Gene-pathway mapping</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-pills fa-3x text-blue-600 mb-3"></i>
+                    <h5 class="fw-bold">Pharmacogenomics</h5>
+                    <p class="text-muted small">Drug metabolism predictions</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-4">
+                    <h4 class="mb-0">
+                        <i class="fas fa-microscope mr-2"></i>
+                        Generate Your Genomic Profile
+                    </h4>
+                </div>
+                <div class="card-body p-4">
+                    <form id="genomicProfileForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Age</label>
+                                <input type="number" class="form-control" id="age" min="0" max="120" value="35"
+                                    required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Gender</label>
+                                <select class="form-select" id="gender" required>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Ethnicity</label>
+                            <select class="form-select" id="ethnicity" required>
+                                <option value="">Select ethnicity...</option>
+                                <option value="Caucasian">Caucasian</option>
+                                <option value="African">African</option>
+                                <option value="Asian">Asian</option>
+                                <option value="Hispanic">Hispanic</option>
+                                <option value="Ashkenazi Jewish">Ashkenazi Jewish</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Family History Disorders (comma-separated)</label>
+                            <input type="text" class="form-control" id="disorders"
+                                placeholder="e.g., Huntington Disease, Breast Cancer">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Symptoms (comma-separated)</label>
+                            <input type="text" class="form-control" id="symptoms"
+                                placeholder="e.g., muscle_weakness, fatigue">
+                        </div>
+
+                        <button type="submit" class="btn btn-lg btn-primary w-100">
+                            <i class="fas fa-dna mr-2"></i>
+                            Generate Genomic Profile
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div id="resultsSection" class="mt-4" style="display: none;">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-header bg-success text-white py-3">
+                        <h5 class="mb-0">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            Your Genomic Profile
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div id="profileResults"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('genomicProfileForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const disorders = document.getElementById('disorders').value.split(',').map(s => s.trim()).filter(s => s);
+        const symptoms = document.getElementById('symptoms').value.split(',').map(s => s.trim()).filter(s => s);
+
+        const formData = {
+            patient_data: {
+                age: parseInt(document.getElementById('age').value),
+                gender: document.getElementById('gender').value
+            },
+            family_history: {
+                has_history: disorders.length > 0,
+                disorders: disorders
+            },
+            symptoms: symptoms,
+            ethnicity: document.getElementById('ethnicity').value
+        };
+
+        try {
+            const response = await fetch('/api/advanced/genomic-profile/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                displayProfile(data.profile);
+            } else {
+                alert('Error: ' + data.error);
+            }
+        } catch (error) {
+            alert('Error generating profile: ' + error.message);
+        }
+    });
+
+    function displayProfile(profile) {
+        let html = `
+        <div class="alert alert-info mb-4">
+            <h6 class="fw-bold">Profile ID: ${profile.profile_id}</h6>
+            <small>Generated: ${new Date(profile.generated_at).toLocaleString()}</small>
+        </div>
+        
+        <h5 class="fw-bold mb-3">
+            <i class="fas fa-chart-bar mr-2"></i>
+            Summary
+        </h5>
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="text-center p-3 bg-light rounded">
+                    <h4 class="fw-bold text-primary">${profile.summary.total_genes_analyzed}</h4>
+                    <small class="text-muted">Genes Analyzed</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center p-3 bg-light rounded">
+                    <h4 class="fw-bold text-warning">${profile.summary.high_probability_carrier_status}</h4>
+                    <small class="text-muted">High Probability Carriers</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center p-3 bg-light rounded">
+                    <h4 class="fw-bold text-danger">${profile.summary.high_risk_mutations}</h4>
+                    <small class="text-muted">High Risk Mutations</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center p-3 bg-light rounded">
+                    <h4 class="fw-bold text-success">${profile.summary.pathways_affected}</h4>
+                    <small class="text-muted">Pathways Affected</small>
+                </div>
+            </div>
+        </div>
+        
+        <h5 class="fw-bold mb-3">
+            <i class="fas fa-dna mr-2"></i>
+            Carrier Probabilities
+        </h5>
+        <div class="table-responsive mb-4">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Gene</th>
+                        <th>Probability</th>
+                        <th>Status</th>
+                        <th>Chromosome</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+        for (const [gene, data] of Object.entries(profile.carrier_probabilities)) {
+            html += `
+            <tr>
+                <td><strong>${gene}</strong></td>
+                <td>${data.probability}%</td>
+                <td><span class="badge bg-${data.probability > 50 ? 'danger' : data.probability > 25 ? 'warning' : 'success'}">${data.status}</span></td>
+                <td>${data.chromosome}</td>
+            </tr>
+        `;
+        }
+
+        html += `
+                </tbody>
+            </table>
+        </div>
+    `;
+
+        document.getElementById('profileResults').innerHTML = html;
+        document.getElementById('resultsSection').style.display = 'block';
+        document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+{% endblock %}

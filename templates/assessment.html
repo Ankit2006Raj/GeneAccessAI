@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block title %}Choose Assessment Method - GeneAccessAI{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-gradient-to-br from-purple-50 to-pink-50 min-vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- Advanced Features Banner -->
+                <div class="alert alert-dismissible fade show border-0 shadow-lg mb-4"
+                    style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px;">
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 mr-3">
+                            <i class="fas fa-star fa-3x text-warning"></i>
+                        </div>
+                        <div class="flex-grow-1 text-white">
+                            <h5 class="font-bold mb-2">
+                                <i class="fas fa-sparkles mr-2"></i>Unlock Advanced Features After Assessment
+                            </h5>
+                            <p class="mb-2">Get access to professional genetic analysis tools:</p>
+                            <div class="d-flex flex-wrap gap-2 mb-2">
+                                <span class="badge bg-white text-purple-600 px-3 py-2">
+                                    <i class="fas fa-globe-americas mr-1"></i>Ethnicity Risk Adjuster
+                                </span>
+                                <span class="badge bg-white text-indigo-600 px-3 py-2">
+                                    <i class="fas fa-dna mr-1"></i>Genomic Profile Generator
+                                </span>
+                                <span class="badge bg-white text-red-600 px-3 py-2">
+                                    <i class="fas fa-flask mr-1"></i>Clinical Test Recommender
+                                </span>
+                            </div>
+                            <a href="/advanced-features" class="btn btn-light btn-sm">
+                                <i class="fas fa-arrow-right mr-1"></i>Learn More
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Header -->
+                <div class="text-center mb-5">
+                    <h1 class="display-4 font-bold text-gray-800 mb-3">
+                        <i class="fas fa-stethoscope text-blue-600 mr-3"></i>Choose Your Assessment Method
+                    </h1>
+                    <p class="lead text-gray-600">Select how you'd like to complete your genetic health assessment</p>
+                </div>
+
+                <!-- Assessment Options -->
+                <div class="row g-4">
+                    <!-- Form-Based Assessment -->
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-2xl rounded-3xl h-100 hover-lift">
+                            <div class="card-body p-5 text-center">
+                                <div
+                                    class="bg-blue-100 w-24 h-24 rounded-full d-flex align-items-center justify-content-center mx-auto mb-4">
+                                    <i class="fas fa-clipboard-list text-blue-600 text-5xl"></i>
+                                </div>
+                                <h3 class="font-bold mb-3">Form-Based Assessment</h3>
+                                <p class="text-gray-600 mb-4">
+                                    Quick and structured questionnaire. Fill out a comprehensive form with all your
+                                    health information at once.
+                                </p>
+
+                                <div class="text-start mb-4">
+                                    <h6 class="font-bold mb-3">Features:</h6>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2">
+                                            <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                                            Structured questionnaire
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                                            Complete all at once
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                                            Faster completion
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                                            Clear progress tracking
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="text-center">
+                                    <span class="badge bg-blue-100 text-blue-600 px-3 py-2 mb-3">
+                                        <i class="fas fa-clock mr-1"></i> ~3-5 minutes
+                                    </span>
+                                </div>
+
+                                <a href="/assessment-form" class="btn btn-primary btn-lg w-100 rounded-xl">
+                                    <i class="fas fa-edit mr-2"></i>Start Form Assessment
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat-Based Assessment -->
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-2xl rounded-3xl h-100 hover-lift">
+                            <div class="card-body p-5 text-center">
+                                <div
+                                    class="bg-green-100 w-24 h-24 rounded-full d-flex align-items-center justify-content-center mx-auto mb-4">
+                                    <i class="fas fa-comments text-green-600 text-5xl"></i>
+                                </div>
+                                <h3 class="font-bold mb-3">AI Chat Assessment</h3>
+                                <p class="text-gray-600 mb-4">
+                                    Conversational approach with our AI assistant. Answer questions naturally through an
+                                    interactive chat interface.
+                                </p>
+
+                                <div class="text-start mb-4">
+                                    <h6 class="font-bold mb-3">Features:</h6>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2">
+                                            <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                                            Natural conversation
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                                            AI-guided questions
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                                            Interactive experience
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                                            Personalized follow-ups
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="text-center">
+                                    <span class="badge bg-green-100 text-green-600 px-3 py-2 mb-3">
+                                        <i class="fas fa-clock mr-1"></i> ~5-7 minutes
+                                    </span>
+                                </div>
+
+                                <a href="/assessment-chat" class="btn btn-success btn-lg w-100 rounded-xl">
+                                    <i class="fas fa-robot mr-2"></i>Start Chat Assessment
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Section -->
+                <div class="card border-0 shadow-lg rounded-3xl mt-5">
+                    <div class="card-body p-5">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h5 class="font-bold mb-2">
+                                    <i class="fas fa-info-circle text-blue-600 mr-2"></i>Both methods provide the same
+                                    accurate results
+                                </h5>
+                                <p class="text-gray-600 mb-0">
+                                    Choose the method that feels most comfortable for you. Both use the same advanced AI
+                                    models and provide comprehensive genetic risk assessments with detailed reports.
+                                </p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="bg-blue-50 rounded-3xl p-4">
+                                    <h3 class="font-bold text-blue-600 mb-1">90%+</h3>
+                                    <p class="text-sm text-gray-600 mb-0">Accuracy Rate</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hover-lift:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
+    }
+</style>
+{% endblock %}

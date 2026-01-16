@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+
+{% block title %}Clinical Test Recommender - GeneAccessAI{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="text-center mb-5">
+        <div class="d-inline-block bg-red-100 text-red-600 px-4 py-2 rounded-full mb-3">
+            <i class="fas fa-flask mr-2"></i>
+            <span class="badge bg-warning text-dark">PRO FEATURE</span>
+        </div>
+        <h1 class="display-4 fw-bold mb-3">
+            <i class="fas fa-flask text-red-600"></i>
+            Clinical Test Recommendation Engine
+        </h1>
+        <p class="lead text-muted">
+            AI Lab Order Assistant with cost estimates and insurance predictions
+        </p>
+        <p class="text-muted">Evidence-based test recommendations for healthcare providers</p>
+    </div>
+
+    <!-- Feature Cards -->
+    <div class="row mb-5">
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-vial fa-3x text-blue-600 mb-3"></i>
+                    <h5 class="fw-bold">30+ Tests</h5>
+                    <p class="text-muted small">Comprehensive database</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-dollar-sign fa-3x text-green-600 mb-3"></i>
+                    <h5 class="fw-bold">Cost Estimates</h5>
+                    <p class="text-muted small">Min, max, average</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-clock fa-3x text-purple-600 mb-3"></i>
+                    <h5 class="fw-bold">Timeline</h5>
+                    <p class="text-muted small">Turnaround estimates</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-shield-alt fa-3x text-indigo-600 mb-3"></i>
+                    <h5 class="fw-bold">Insurance</h5>
+                    <p class="text-muted small">Coverage predictions</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-gradient-to-r from-red-500 to-pink-600 text-white py-4">
+                    <h4 class="mb-0">
+                        <i class="fas fa-clipboard-list mr-2"></i>
+                        Get Test Recommendations
+                    </h4>
+                </div>
+                <div class="card-body p-4">
+                    <form id="clinicalTestsForm">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Genetic Disorder</label>
+                            <select class="form-select form-select-lg" id="disorder" required>
+                                <option value="">Select disorder...</option>
+                                <option value="Huntington Disease">Huntington Disease</option>
+                                <option value="Cystic Fibrosis">Cystic Fibrosis</option>
+                                <option value="Sickle Cell Disease">Sickle Cell Disease</option>
+                                <option value="Muscular Dystrophy">Muscular Dystrophy</option>
+                                <option value="Hemophilia">Hemophilia</option>
+                                <option value="Thalassemia">Thalassemia</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Risk Score (%)</label>
+                            <input type="number" class="form-control form-control-lg" id="riskScore" min="0" max="100"
+                                value="65" required>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Age</label>
+                                <input type="number" class="form-control" id="age" min="0" max="120" value="35">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Gender</label>
+                                <select class="form-select" id="gender">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Symptoms (comma-separated)</label>
+                            <input type="text" class="form-control" id="symptoms"
+                                placeholder="e.g., muscle_weakness, fatigue">
+                        </div>
+
+                        <button type="submit" class="btn btn-lg btn-primary w-100">
+                            <i class="fas fa-search mr-2"></i>
+                            Get Test Recommendations
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div id="resultsSection" class="mt-4" style="display: none;">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-header bg-success text-white py-3">
+                        <h5 class="mb-0">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            Test Recommendations
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div id="testResults"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('clinicalTestsForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const symptoms = document.getElementById('symptoms').value.split(',').map(s => s.trim()).filter(s => s);
+
+        const formData = {
+            disorder: document.getElementById('disorder').value,
+            risk_score: parseFloat(document.getElementById('riskScore').value),
+            age: parseInt(document.getElementById('age').value),
+            gender: document.getElementById('gender').value,
+            symptoms: symptoms.length > 0 ? symptoms : null
+        };
+
+        try {
+            const response = await fetch('/api/advanced/clinical-tests/recommend', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                displayTests(data.recommendations);
+            } else {
+                alert('Error: ' + data.error);
+            }
+        } catch (error) {
+            alert('Error getting recommendations: ' + error.message);
+        }
+    });
+
+    function displayTests(recommendations) {
+        let html = `
+        <div class="alert alert-${recommendations.risk_score >= 70 ? 'danger' : recommendations.risk_score >= 50 ? 'warning' : 'info'} mb-4">
+            <h5 class="fw-bold mb-2">
+                <i class="fas fa-exclamation-triangle mr-2"></i>
+                ${recommendations.priority_level}
+            </h5>
+            <p class="mb-0">Risk Score: <strong>${recommendations.risk_score}%</strong></p>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="text-center p-3 bg-light rounded">
+                    <h4 class="fw-bold text-primary">${recommendations.recommended_tests.length}</h4>
+                    <small class="text-muted">Recommended Tests</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center p-3 bg-light rounded">
+                    <h4 class="fw-bold text-success">${recommendations.estimated_total_cost.average}</h4>
+                    <small class="text-muted">Average Cost</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center p-3 bg-light rounded">
+                    <h4 class="fw-bold text-info">${recommendations.estimated_timeline}</h4>
+                    <small class="text-muted">Timeline</small>
+                </div>
+            </div>
+        </div>
+        
+        <h5 class="fw-bold mb-3">
+            <i class="fas fa-list-check mr-2"></i>
+            Recommended Tests
+        </h5>
+    `;
+
+        recommendations.recommended_tests.forEach(test => {
+            const priorityColor = test.priority === 'Urgent' ? 'danger' : test.priority === 'High' ? 'warning' : 'info';
+            html += `
+            <div class="card mb-3 border-start border-${priorityColor} border-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h6 class="fw-bold mb-0">${test.test_name}</h6>
+                        <span class="badge bg-${priorityColor}">${test.priority}</span>
+                    </div>
+                    <p class="text-muted small mb-2">${test.description}</p>
+                    <div class="row small">
+                        <div class="col-md-4">
+                            <strong>Cost:</strong> ${test.cost_range}
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Time:</strong> ${test.turnaround_time}
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Sample:</strong> ${test.sample_type}
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <small class="text-muted"><strong>Reason:</strong> ${test.reason}</small>
+                    </div>
+                </div>
+            </div>
+        `;
+        });
+
+        document.getElementById('testResults').innerHTML = html;
+        document.getElementById('resultsSection').style.display = 'block';
+        document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+{% endblock %}

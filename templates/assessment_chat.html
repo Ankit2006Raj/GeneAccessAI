@@ -1,0 +1,298 @@
+{% extends "base.html" %}
+
+{% block title %}AI Chat Assessment - GeneAccessAI{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-gradient-to-br from-purple-50 to-pink-50 min-vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- Header -->
+                <div class="text-center mb-5">
+                    <h1 class="display-4 font-bold text-gray-800 mb-3">
+                        <i class="fas fa-robot text-blue-600 mr-3"></i>AI Chat Assessment
+                    </h1>
+                    <p class="lead text-gray-600">Chat with our AI to assess your genetic disorder risk</p>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="card border-0 shadow-lg rounded-3xl mb-4">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="font-semibold text-gray-700">Assessment Progress</span>
+                            <span class="font-bold text-blue-600" id="progressText">0%</span>
+                        </div>
+                        <div class="progress" style="height: 12px;">
+                            <div id="progressBar" class="progress-bar bg-gradient-to-r from-blue-600 to-indigo-700"
+                                role="progressbar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Container -->
+                <div class="card border-0 shadow-2xl rounded-3xl">
+                    <div
+                        class="card-header bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4 rounded-top-3xl">
+                        <h4 class="mb-0 font-bold">
+                            <i class="fas fa-comments mr-2"></i>AI Health Assistant
+                        </h4>
+                    </div>
+
+                    <div class="card-body p-0">
+                        <!-- Chat Messages -->
+                        <div id="chatMessages" class="p-4"
+                            style="height: 500px; overflow-y: auto; background: linear-gradient(to bottom, #f8f9fa, #ffffff);">
+                            <div class="chat-message bot-message">
+                                <div class="d-flex align-items-start mb-3">
+                                    <div class="bg-blue-600 text-white rounded-circle p-3 mr-3">
+                                        <i class="fas fa-robot"></i>
+                                    </div>
+                                    <div class="bg-white shadow-sm rounded-3xl p-4 flex-grow-1">
+                                        <p class="mb-0">Hello! I'm your AI genetic health assistant. I'll help assess
+                                            your genetic disorder risk through a few questions. Your name will be
+                                            included in your personalized report. Let's get started!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chat Input -->
+                        <div class="border-top p-4 bg-white">
+                            <form id="chatForm" class="d-flex gap-2">
+                                <input type="text" id="userInput" class="form-control form-control-lg rounded-xl"
+                                    placeholder="Type your message..." required>
+                                <button type="submit" class="btn btn-primary btn-lg px-4 rounded-xl">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </form>
+
+                            <div class="mt-3 text-center">
+                                <button id="getResultsBtn" class="btn btn-success btn-lg px-5 rounded-xl"
+                                    style="display: none;">
+                                    <i class="fas fa-chart-line mr-2"></i>Get Results
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Modal -->
+                <div class="modal fade" id="resultsModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content rounded-3xl border-0 shadow-2xl">
+                            <div class="modal-header bg-gradient-to-r from-blue-600 to-indigo-700 text-white border-0">
+                                <h3 class="modal-title font-bold">
+                                    <i class="fas fa-file-medical-alt mr-2"></i>Assessment Results
+                                </h3>
+                                <button type="button" class="btn-close btn-close-white"
+                                    data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body p-5" id="resultsContent">
+                                <!-- Results will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    let conversationState = 'initial';
+    let conversationData = {
+        patient_name: '',
+        symptoms: [],
+        family_history: {}
+    };
+
+    const chatMessages = document.getElementById('chatMessages');
+    const chatForm = document.getElementById('chatForm');
+    const userInput = document.getElementById('userInput');
+    const getResultsBtn = document.getElementById('getResultsBtn');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+
+    // Start conversation
+    setTimeout(() => {
+        sendMessage('start');
+    }, 1000);
+
+    chatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const message = userInput.value.trim();
+        if (!message) return;
+
+        addUserMessage(message);
+        userInput.value = '';
+
+        // Store conversation data
+        storeConversationData(message);
+
+        // Send to AI
+        await sendMessage(message);
+    });
+
+    getResultsBtn.addEventListener('click', async () => {
+        await getPrediction();
+    });
+
+    async function sendMessage(message) {
+        try {
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: message,
+                    state: conversationState
+                })
+            });
+
+            const data = await response.json();
+
+            addBotMessage(data.response);
+            conversationState = data.next_state;
+            updateProgress(data.progress);
+
+            if (data.next_state === 'complete') {
+                getResultsBtn.style.display = 'block';
+                userInput.disabled = true;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            addBotMessage('Sorry, I encountered an error. Please try again.');
+        }
+    }
+
+    function storeConversationData(message) {
+        if (conversationState === 'patient_name') {
+            conversationData.patient_name = message;
+        } else if (conversationState === 'symptoms' || conversationState === 'additional_symptoms') {
+            conversationData.symptoms.push(message);
+        } else if (conversationState === 'family_history') {
+            conversationData.family_history.has_history = message.toLowerCase().includes('yes');
+            conversationData.family_history.details = message;
+        } else if (conversationState === 'severity') {
+            conversationData.family_history.severity = parseInt(message) || 5;
+        }
+    }
+
+    async function getPrediction() {
+        getResultsBtn.disabled = true;
+        getResultsBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Analyzing...';
+
+        try {
+            const response = await fetch('/api/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(conversationData)
+            });
+
+            const data = await response.json();
+            displayResults(data);
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error getting prediction. Please try again.');
+        }
+    }
+
+    function displayResults(data) {
+        const riskColor = data.risk_level === 'Low' ? 'success' :
+            data.risk_level === 'Moderate' ? 'warning' : 'danger';
+
+        const resultsHTML = `
+        <div class="text-center mb-4">
+            <div class="bg-${riskColor} bg-opacity-10 w-24 h-24 rounded-full d-flex align-items-center justify-content-center mx-auto mb-3">
+                <i class="fas fa-heartbeat text-${riskColor} text-5xl"></i>
+            </div>
+            <h3 class="font-bold text-2xl mb-2">${data.disorder}</h3>
+            <span class="badge bg-${riskColor} px-4 py-2 text-lg">${data.risk_level} Risk</span>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-6">
+                <div class="card bg-light border-0 p-3 text-center">
+                    <h5 class="font-bold text-3xl text-${riskColor} mb-1">${data.risk_score}%</h5>
+                    <p class="text-sm text-gray-600 mb-0">Risk Score</p>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card bg-light border-0 p-3 text-center">
+                    <h5 class="font-bold text-3xl text-blue-600 mb-1">${data.confidence}%</h5>
+                    <p class="text-sm text-gray-600 mb-0">Confidence</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <h5 class="font-bold mb-3"><i class="fas fa-clipboard-list text-blue-600 mr-2"></i>Recommendations</h5>
+            <ul class="list-group">
+                ${data.recommendations.map(rec => `
+                    <li class="list-group-item border-0 bg-light mb-2 rounded-xl">
+                        <i class="fas fa-check-circle text-green-600 mr-2"></i>${rec}
+                    </li>
+                `).join('')}
+            </ul>
+        </div>
+        
+        <div class="text-center">
+            <a href="/api/download-report/${data.assessment_id}" class="btn btn-primary btn-lg px-5 rounded-xl">
+                <i class="fas fa-download mr-2"></i>Download Full Report
+            </a>
+            <a href="/dashboard" class="btn btn-outline-primary btn-lg px-5 rounded-xl ml-2">
+                <i class="fas fa-home mr-2"></i>Go to Dashboard
+            </a>
+        </div>
+    `;
+
+        document.getElementById('resultsContent').innerHTML = resultsHTML;
+        const modal = new bootstrap.Modal(document.getElementById('resultsModal'));
+        modal.show();
+    }
+
+    function addUserMessage(message) {
+        const messageHTML = `
+        <div class="chat-message user-message">
+            <div class="d-flex align-items-start mb-3 justify-content-end">
+                <div class="bg-blue-600 text-white shadow-sm rounded-3xl p-4 mr-3" style="max-width: 70%;">
+                    <p class="mb-0">${message}</p>
+                </div>
+                <div class="bg-gray-300 text-gray-700 rounded-circle p-3">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+    `;
+        chatMessages.insertAdjacentHTML('beforeend', messageHTML);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function addBotMessage(message) {
+        const messageHTML = `
+        <div class="chat-message bot-message">
+            <div class="d-flex align-items-start mb-3">
+                <div class="bg-blue-600 text-white rounded-circle p-3 mr-3">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="bg-white shadow-sm rounded-3xl p-4 flex-grow-1" style="max-width: 70%;">
+                    <p class="mb-0">${message}</p>
+                </div>
+            </div>
+        </div>
+    `;
+        chatMessages.insertAdjacentHTML('beforeend', messageHTML);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function updateProgress(progress) {
+        progressBar.style.width = progress + '%';
+        progressText.textContent = progress + '%';
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,372 @@
+{% extends "base.html" %}
+
+{% block title %}Risk Timeline - GeneAccessAI{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">
+                <i class="fas fa-chart-line"></i> AI-Generated Risk Timeline
+            </h1>
+            <p class="lead">Future projection of your genetic risk with lifestyle simulations</p>
+        </div>
+    </div>
+
+    <!-- Risk Progression Chart -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-chart-area"></i> Risk Progression Curve (20 Years)</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="riskProgressionChart" height="80"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Future Projections -->
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-info">
+                <div class="card-body text-center">
+                    <h6 class="text-muted">5-Year Projection</h6>
+                    <h2 class="text-info" id="risk5yr">--</h2>
+                    <p class="mb-0">Risk Score</p>
+                    <small class="text-muted" id="age5yr">Age: --</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-warning">
+                <div class="card-body text-center">
+                    <h6 class="text-muted">10-Year Projection</h6>
+                    <h2 class="text-warning" id="risk10yr">--</h2>
+                    <p class="mb-0">Risk Score</p>
+                    <small class="text-muted" id="age10yr">Age: --</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-danger">
+                <div class="card-body text-center">
+                    <h6 class="text-muted">20-Year Projection</h6>
+                    <h2 class="text-danger" id="risk20yr">--</h2>
+                    <p class="mb-0">Risk Score</p>
+                    <small class="text-muted" id="age20yr">Age: --</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- What-If Scenarios -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-lightbulb"></i> What-If Scenarios</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="whatIfChart" height="80"></canvas>
+                    <div id="scenarioDetails" class="mt-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lifestyle Recommendations -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-heartbeat"></i> Lifestyle Impact Analysis</h5>
+                </div>
+                <div class="card-body">
+                    <div id="lifestyleRecommendations"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Critical Milestones -->
+    <div class="row mt-4 mb-5">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0"><i class="fas fa-flag"></i> Critical Age Milestones</h5>
+                </div>
+                <div class="card-body">
+                    <div id="milestones"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script>
+    let riskProgressionChart, whatIfChart;
+
+    // Load timeline data from assessment
+    function loadTimelineData(assessmentId) {
+        // This would be called from the assessment results page
+        // For now, we'll use demo data
+        const demoData = {
+            current_age: 35,
+            disorder: "Huntington Disease",
+            current_risk_score: 65,
+            family_history: {
+                has_history: true,
+                affected_relatives: ["parent"]
+            }
+        };
+
+        fetch('/api/advanced/risk-timeline', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(demoData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    displayTimeline(data.timeline);
+                }
+            });
+    }
+
+    function displayTimeline(timeline) {
+        // Update projection cards
+        document.getElementById('risk5yr').textContent = timeline.projections['5_year'].projected_risk_score;
+        document.getElementById('age5yr').textContent = `Age: ${timeline.projections['5_year'].projected_age}`;
+
+        document.getElementById('risk10yr').textContent = timeline.projections['10_year'].projected_risk_score;
+        document.getElementById('age10yr').textContent = `Age: ${timeline.projections['10_year'].projected_age}`;
+
+        document.getElementById('risk20yr').textContent = timeline.projections['20_year'].projected_risk_score;
+        document.getElementById('age20yr').textContent = `Age: ${timeline.projections['20_year'].projected_age}`;
+
+        // Create progression chart
+        createProgressionChart(timeline.chart_data);
+
+        // Create what-if chart
+        createWhatIfChart(timeline.chart_data);
+
+        // Display lifestyle recommendations
+        displayLifestyleRecommendations(timeline.lifestyle_recommendations);
+
+        // Display milestones
+        displayMilestones(timeline.milestones);
+
+        // Display scenario details
+        displayScenarioDetails(timeline.what_if_scenarios);
+    }
+
+    function createProgressionChart(chartData) {
+        const ctx = document.getElementById('riskProgressionChart').getContext('2d');
+
+        if (riskProgressionChart) {
+            riskProgressionChart.destroy();
+        }
+
+        riskProgressionChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: chartData.labels,
+                datasets: [{
+                    label: 'Risk Score',
+                    data: chartData.risk_scores,
+                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }, {
+                    label: 'Manifestation Probability',
+                    data: chartData.manifestation_prob,
+                    borderColor: 'rgb(54, 162, 235)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Risk Progression Over Time'
+                    },
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Score / Probability (%)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Age (years)'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function createWhatIfChart(chartData) {
+        const ctx = document.getElementById('whatIfChart').getContext('2d');
+
+        if (whatIfChart) {
+            whatIfChart.destroy();
+        }
+
+        const scenarios = chartData.scenarios_comparison;
+
+        whatIfChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: scenarios.map(s => s.name),
+                datasets: [{
+                    label: '10-Year Risk Score',
+                    data: scenarios.map(s => s.risk_10yr),
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(255, 159, 64, 0.6)',
+                        'rgba(255, 99, 132, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Lifestyle Change Impact on 10-Year Risk'
+                    },
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Risk Score'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function displayLifestyleRecommendations(recommendations) {
+        const container = document.getElementById('lifestyleRecommendations');
+        let html = '<div class="table-responsive"><table class="table table-hover">';
+        html += '<thead><tr><th>Category</th><th>Action</th><th>Impact</th><th>Expected Benefit</th><th>Priority</th></tr></thead><tbody>';
+
+        recommendations.forEach(rec => {
+            const priorityClass = rec.priority === 'Critical' ? 'danger' : rec.priority === 'High' ? 'warning' : 'info';
+            html += `
+            <tr>
+                <td><strong>${rec.category}</strong></td>
+                <td>${rec.action}</td>
+                <td>${rec.impact}</td>
+                <td><span class="badge bg-success">${rec.expected_benefit} points</span></td>
+                <td><span class="badge bg-${priorityClass}">${rec.priority}</span></td>
+            </tr>
+        `;
+        });
+
+        html += '</tbody></table></div>';
+        container.innerHTML = html;
+    }
+
+    function displayMilestones(milestones) {
+        const container = document.getElementById('milestones');
+
+        if (milestones.length === 0) {
+            container.innerHTML = '<p class="text-success">No critical milestones detected in the next 20 years.</p>';
+            return;
+        }
+
+        let html = '<div class="timeline">';
+        milestones.forEach(milestone => {
+            const levelClass = milestone.risk_level === 'Critical' ? 'danger' : milestone.risk_level === 'High' ? 'warning' : 'info';
+            html += `
+            <div class="alert alert-${levelClass}">
+                <h6><i class="fas fa-flag"></i> Age ${milestone.age} (${milestone.years_from_now} years from now)</h6>
+                <p class="mb-0">${milestone.description}</p>
+                ${milestone.risk_score ? `<small>Risk Score: ${milestone.risk_score}</small>` : ''}
+            </div>
+        `;
+        });
+        html += '</div>';
+        container.innerHTML = html;
+    }
+
+    function displayScenarioDetails(scenarios) {
+        const container = document.getElementById('scenarioDetails');
+        let html = '<h6 class="mt-3">Scenario Details:</h6><div class="row">';
+
+        scenarios.forEach(scenario => {
+            const impactClass = scenario.risk_reduction > 0 ? 'success' : 'danger';
+            html += `
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">${scenario.scenario}</h6>
+                        <p class="mb-1"><strong>Impact:</strong> ${scenario.impact_percentage}%</p>
+                        <p class="mb-1"><strong>10-Year Risk:</strong> ${scenario.projected_10yr_risk}</p>
+                        <p class="mb-1 text-${impactClass}">
+                            <strong>Risk Reduction:</strong> ${scenario.risk_reduction} points
+                        </p>
+                        ${scenario.years_of_life_quality_gained > 0 ?
+                    `<p class="mb-0 text-success"><i class="fas fa-heart"></i> +${scenario.years_of_life_quality_gained} quality years</p>` : ''}
+                    </div>
+                </div>
+            </div>
+        `;
+        });
+
+        html += '</div>';
+        container.innerHTML = html;
+    }
+
+    // Load data on page load
+    document.addEventListener('DOMContentLoaded', function () {
+        // Check if assessment ID is in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const assessmentId = urlParams.get('assessment_id');
+
+        if (assessmentId) {
+            loadTimelineData(assessmentId);
+        } else {
+            // Load demo data
+            loadTimelineData(null);
+        }
+    });
+</script>
+{% endblock %}

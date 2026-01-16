@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}Clinical Knowledge Updater - GeneAccessAI{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <div class="d-inline-block bg-orange-100 text-orange-600 px-4 py-2 rounded-full mb-3">
+            <i class="fas fa-book-medical mr-2"></i>
+            <span class="badge bg-warning text-dark">PRO FEATURE</span>
+        </div>
+        <h1 class="display-4 fw-bold mb-3">
+            <i class="fas fa-book-medical text-orange-600"></i>
+            Clinical Knowledge Updater
+        </h1>
+        <p class="lead text-muted">Real-Time Medical Research Sync AI</p>
+        <p class="text-muted">Auto-updating medical intelligence from PubMed, WHO, CDC, NIH</p>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-database fa-2x text-blue-600 mb-2"></i>
+                    <h5 class="fw-bold">Live Updates</h5>
+                    <p class="text-muted small mb-0">Real-time research monitoring</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-chart-line fa-2x text-green-600 mb-2"></i>
+                    <h5 class="fw-bold">Trends</h5>
+                    <p class="text-muted small mb-0">Research trend analysis</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-history fa-2x text-purple-600 mb-2"></i>
+                    <h5 class="fw-bold">History</h5>
+                    <p class="text-muted small mb-0">Update tracking</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-bell fa-2x text-red-600 mb-2"></i>
+                    <h5 class="fw-bold">Alerts</h5>
+                    <p class="text-muted small mb-0">Critical updates</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card border-0 shadow-lg mb-4">
+                <div class="card-header bg-gradient-to-r from-orange-500 to-red-600 text-white py-3">
+                    <h5 class="mb-0"><i class="fas fa-sync mr-2"></i>Check for Updates</h5>
+                </div>
+                <div class="card-body p-4">
+                    <button id="checkUpdatesBtn" class="btn btn-primary btn-lg w-100">
+                        <i class="fas fa-search mr-2"></i>Scan Research Sources
+                    </button>
+                </div>
+            </div>
+
+            <div id="updatesSection" style="display: none;">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-header bg-success text-white py-3">
+                        <h5 class="mb-0"><i class="fas fa-newspaper mr-2"></i>Latest Research Updates</h5>
+                    </div>
+                    <div class="card-body p-4" id="updatesContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('checkUpdatesBtn').addEventListener('click', async function () {
+        this.disabled = true;
+        this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Scanning...';
+
+        try {
+            const response = await fetch('/api/advanced/knowledge/check-updates');
+            const data = await response.json();
+
+            if (data.success) {
+                displayUpdates(data);
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        } finally {
+            this.disabled = false;
+            this.innerHTML = '<i class="fas fa-search mr-2"></i>Scan Research Sources';
+        }
+    });
+
+    function displayUpdates(data) {
+        let html = `
+        <div class="alert alert-info mb-4">
+            <strong>Scan Complete:</strong> Found ${data.updates_found} new research updates from ${data.sources_checked.length} sources
+        </div>
+    `;
+
+        data.updates.forEach(update => {
+            const impactColor = update.impact === 'Very High' ? 'danger' : update.impact === 'High' ? 'warning' : 'info';
+            html += `
+            <div class="card mb-3 border-start border-${impactColor} border-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h6 class="fw-bold mb-0">${update.title}</h6>
+                        <span class="badge bg-${impactColor}">${update.impact} Impact</span>
+                    </div>
+                    <p class="text-muted small mb-2">
+                        <i class="fas fa-flask mr-1"></i>${update.disorder} | 
+                        <i class="fas fa-calendar mr-1"></i>${update.date} | 
+                        <i class="fas fa-book mr-1"></i>${update.source}
+                    </p>
+                    <p class="mb-2">${update.summary}</p>
+                    <span class="badge bg-secondary">${update.type}</span>
+                    <span class="badge bg-success">${update.confidence}% Confidence</span>
+                </div>
+            </div>
+        `;
+        });
+
+        document.getElementById('updatesContent').innerHTML = html;
+        document.getElementById('updatesSection').style.display = 'block';
+    }
+</script>
+
+<style>
+    .text-orange-600 {
+        color: #ea580c;
+    }
+
+    .bg-orange-100 {
+        background-color: #ffedd5;
+    }
+
+    .bg-orange-500 {
+        background-color: #f97316;
+    }
+</style>
+{% endblock %}

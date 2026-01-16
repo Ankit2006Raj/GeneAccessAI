@@ -1,0 +1,708 @@
+{% extends "base.html" %}
+
+{% block title %}Form Assessment - GeneAccessAI{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-gradient-to-br from-blue-50 to-indigo-50 min-vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Header -->
+                <div class="text-center mb-4">
+                    <h1 class="display-5 font-bold text-gray-800 mb-3">
+                        <i class="fas fa-clipboard-list text-blue-600 mr-3"></i>Genetic Health Assessment Form
+                    </h1>
+                    <p class="lead text-gray-600">Complete the form below to get your genetic risk assessment</p>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="card border-0 shadow-lg rounded-3xl mb-4">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="font-semibold text-gray-700">Form Progress</span>
+                            <span class="font-bold text-blue-600" id="formProgress">0%</span>
+                        </div>
+                        <div class="progress" style="height: 12px;">
+                            <div id="progressBar" class="progress-bar bg-gradient-to-r from-blue-600 to-indigo-700"
+                                role="progressbar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Assessment Form -->
+                <form id="assessmentForm">
+                    <!-- Personal Information -->
+                    <div class="card border-0 shadow-lg rounded-3xl mb-4">
+                        <div class="card-header bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4">
+                            <h5 class="mb-0 font-bold">
+                                <i class="fas fa-user mr-2"></i>Personal Information
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-12">
+                                    <label class="form-label font-semibold">Patient Name *</label>
+                                    <input type="text" class="form-control form-control-lg" name="patient_name" required
+                                        placeholder="Enter full name" maxlength="100">
+                                    <small class="text-muted">This name will appear on your report</small>
+                                </div>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label class="form-label font-semibold">Age *</label>
+                                    <input type="number" class="form-control form-control-lg" name="age" required
+                                        min="1" max="120" placeholder="e.g., 35">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label font-semibold">Gender *</label>
+                                    <select class="form-select form-control-lg" name="gender" required>
+                                        <option value="">Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label font-semibold">Ethnicity *</label>
+                                    <select class="form-select form-control-lg" name="ethnicity" required>
+                                        <option value="">Select Ethnicity</option>
+                                        <option value="caucasian">Caucasian</option>
+                                        <option value="african">African/African American</option>
+                                        <option value="asian">Asian</option>
+                                        <option value="hispanic">Hispanic/Latino</option>
+                                        <option value="middle_eastern">Middle Eastern</option>
+                                        <option value="native_american">Native American</option>
+                                        <option value="pacific_islander">Pacific Islander</option>
+                                        <option value="mixed">Mixed/Multiple</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row g-3 mt-2">
+                                <div class="col-md-6">
+                                    <label class="form-label font-semibold">Height (cm) *</label>
+                                    <input type="number" class="form-control form-control-lg" name="height" required
+                                        min="50" max="250" placeholder="e.g., 170">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label font-semibold">Weight (kg) *</label>
+                                    <input type="number" class="form-control form-control-lg" name="weight" required
+                                        min="20" max="300" placeholder="e.g., 70">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Symptoms -->
+                    <div class="card border-0 shadow-lg rounded-3xl mb-4">
+                        <div class="card-header bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4">
+                            <h5 class="mb-0 font-bold">
+                                <i class="fas fa-heartbeat mr-2"></i>Current Symptoms
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <p class="text-gray-600 mb-3">Select all symptoms you are currently experiencing:</p>
+                            <div class="row g-2">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="symptoms" value="fatigue"
+                                            id="symptom1">
+                                        <label class="form-check-label" for="symptom1">Chronic Fatigue</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="symptoms"
+                                            value="muscle_weakness" id="symptom2">
+                                        <label class="form-check-label" for="symptom2">Muscle Weakness</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="symptoms"
+                                            value="joint_pain" id="symptom3">
+                                        <label class="form-check-label" for="symptom3">Joint Pain</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="symptoms"
+                                            value="vision_problems" id="symptom4">
+                                        <label class="form-check-label" for="symptom4">Vision Problems</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="symptoms"
+                                            value="hearing_loss" id="symptom5">
+                                        <label class="form-check-label" for="symptom5">Hearing Loss</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="symptoms"
+                                            value="frequent_infections" id="symptom6">
+                                        <label class="form-check-label" for="symptom6">Frequent Infections</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="symptoms"
+                                            value="unusual_bleeding" id="symptom7">
+                                        <label class="form-check-label" for="symptom7">Unusual Bleeding/Bruising</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="symptoms"
+                                            value="developmental_delays" id="symptom8">
+                                        <label class="form-check-label" for="symptom8">Developmental Delays</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="symptoms"
+                                            value="breathing_difficulties" id="symptom9">
+                                        <label class="form-check-label" for="symptom9">Breathing Difficulties</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="symptoms"
+                                            value="skin_abnormalities" id="symptom10">
+                                        <label class="form-check-label" for="symptom10">Skin Abnormalities</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="symptoms" value="seizures"
+                                            id="symptom11">
+                                        <label class="form-check-label" for="symptom11">Seizures</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="symptoms"
+                                            value="cognitive_impairment" id="symptom12">
+                                        <label class="form-check-label" for="symptom12">Cognitive Impairment</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="symptoms"
+                                            value="heart_palpitations" id="symptom13">
+                                        <label class="form-check-label" for="symptom13">Heart Palpitations</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="symptoms"
+                                            value="digestive_issues" id="symptom14">
+                                        <label class="form-check-label" for="symptom14">Digestive Issues</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="symptoms"
+                                            value="bone_deformities" id="symptom15">
+                                        <label class="form-check-label" for="symptom15">Bone Deformities</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="symptoms"
+                                            value="growth_abnormalities" id="symptom16">
+                                        <label class="form-check-label" for="symptom16">Growth Abnormalities</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-4">
+                                <label class="form-label font-semibold">When did symptoms first appear?</label>
+                                <select class="form-select form-control-lg" name="symptom_onset">
+                                    <option value="">Select timeframe</option>
+                                    <option value="birth">Since birth</option>
+                                    <option value="childhood">Childhood (0-12 years)</option>
+                                    <option value="adolescence">Adolescence (13-19 years)</option>
+                                    <option value="early_adulthood">Early Adulthood (20-35 years)</option>
+                                    <option value="middle_age">Middle Age (36-55 years)</option>
+                                    <option value="senior">Senior (55+ years)</option>
+                                </select>
+                            </div>
+
+                            <div class="mt-3">
+                                <label class="form-label font-semibold">Symptom Severity (1-10)</label>
+                                <input type="range" class="form-range" name="symptom_severity" min="1" max="10"
+                                    value="5" id="severityRange">
+                                <div class="d-flex justify-content-between text-sm text-gray-600">
+                                    <span>Mild (1)</span>
+                                    <span id="severityValue" class="font-bold text-blue-600">5</span>
+                                    <span>Severe (10)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Family History -->
+                    <div class="card border-0 shadow-lg rounded-3xl mb-4">
+                        <div class="card-header bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4">
+                            <h5 class="mb-0 font-bold">
+                                <i class="fas fa-users mr-2"></i>Family Medical History
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="mb-3">
+                                <label class="form-label font-semibold">Does anyone in your immediate family have a
+                                    genetic disorder? *</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="has_family_history" value="yes"
+                                        id="familyYes" required>
+                                    <label class="form-check-label" for="familyYes">Yes</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="has_family_history" value="no"
+                                        id="familyNo">
+                                    <label class="form-check-label" for="familyNo">No</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="has_family_history"
+                                        value="unknown" id="familyUnknown">
+                                    <label class="form-check-label" for="familyUnknown">Unknown/Not Sure</label>
+                                </div>
+                            </div>
+
+                            <div id="familyDisordersSection" style="display: none;">
+                                <label class="form-label font-semibold mb-3">Select known genetic disorders in your
+                                    family:</label>
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="family_disorders"
+                                                value="cystic_fibrosis" id="disorder1">
+                                            <label class="form-check-label" for="disorder1">Cystic Fibrosis</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="family_disorders"
+                                                value="sickle_cell" id="disorder2">
+                                            <label class="form-check-label" for="disorder2">Sickle Cell Disease</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="family_disorders"
+                                                value="hemophilia" id="disorder3">
+                                            <label class="form-check-label" for="disorder3">Hemophilia</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="family_disorders"
+                                                value="huntingtons" id="disorder4">
+                                            <label class="form-check-label" for="disorder4">Huntington's Disease</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="family_disorders"
+                                                value="downs_syndrome" id="disorder5">
+                                            <label class="form-check-label" for="disorder5">Down Syndrome</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="family_disorders"
+                                                value="thalassemia" id="disorder6">
+                                            <label class="form-check-label" for="disorder6">Thalassemia</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="family_disorders"
+                                                value="muscular_dystrophy" id="disorder7">
+                                            <label class="form-check-label" for="disorder7">Muscular Dystrophy</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="family_disorders"
+                                                value="fragile_x" id="disorder8">
+                                            <label class="form-check-label" for="disorder8">Fragile X Syndrome</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="family_disorders"
+                                                value="marfan" id="disorder9">
+                                            <label class="form-check-label" for="disorder9">Marfan Syndrome</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="family_disorders"
+                                                value="tay_sachs" id="disorder10">
+                                            <label class="form-check-label" for="disorder10">Tay-Sachs Disease</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="family_disorders"
+                                                value="other" id="disorder11">
+                                            <label class="form-check-label" for="disorder11">Other</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-3">
+                                    <label class="form-label font-semibold">Which family members are affected?</label>
+                                    <div class="row g-2">
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                    name="affected_relatives" value="parent" id="rel1">
+                                                <label class="form-check-label" for="rel1">Parent(s)</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                    name="affected_relatives" value="sibling" id="rel2">
+                                                <label class="form-check-label" for="rel2">Sibling(s)</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                    name="affected_relatives" value="grandparent" id="rel3">
+                                                <label class="form-check-label" for="rel3">Grandparent(s)</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                    name="affected_relatives" value="aunt_uncle" id="rel4">
+                                                <label class="form-check-label" for="rel4">Aunt/Uncle</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                    name="affected_relatives" value="cousin" id="rel5">
+                                                <label class="form-check-label" for="rel5">Cousin(s)</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                    name="affected_relatives" value="child" id="rel6">
+                                                <label class="form-check-label" for="rel6">Child(ren)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lifestyle & Medical History -->
+                    <div class="card border-0 shadow-lg rounded-3xl mb-4">
+                        <div class="card-header bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4">
+                            <h5 class="mb-0 font-bold">
+                                <i class="fas fa-notes-medical mr-2"></i>Lifestyle & Medical History
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label font-semibold">Smoking Status</label>
+                                    <select class="form-select form-control-lg" name="smoking_status">
+                                        <option value="">Select status</option>
+                                        <option value="never">Never smoked</option>
+                                        <option value="former">Former smoker</option>
+                                        <option value="current">Current smoker</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label font-semibold">Alcohol Consumption</label>
+                                    <select class="form-select form-control-lg" name="alcohol_consumption">
+                                        <option value="">Select frequency</option>
+                                        <option value="none">None</option>
+                                        <option value="occasional">Occasional (1-2 times/month)</option>
+                                        <option value="moderate">Moderate (1-2 times/week)</option>
+                                        <option value="frequent">Frequent (3+ times/week)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mt-2">
+                                <div class="col-md-6">
+                                    <label class="form-label font-semibold">Exercise Frequency</label>
+                                    <select class="form-select form-control-lg" name="exercise_frequency">
+                                        <option value="">Select frequency</option>
+                                        <option value="none">Rarely/Never</option>
+                                        <option value="light">1-2 times/week</option>
+                                        <option value="moderate">3-4 times/week</option>
+                                        <option value="active">5+ times/week</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label font-semibold">Previous Genetic Testing?</label>
+                                    <select class="form-select form-control-lg" name="previous_testing">
+                                        <option value="">Select option</option>
+                                        <option value="no">No</option>
+                                        <option value="yes_normal">Yes - Normal results</option>
+                                        <option value="yes_abnormal">Yes - Abnormal results</option>
+                                        <option value="yes_carrier">Yes - Carrier status</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mt-3">
+                                <label class="form-label font-semibold">Do you have any chronic conditions?</label>
+                                <div class="row g-2">
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="chronic_conditions"
+                                                value="diabetes" id="chronic1">
+                                            <label class="form-check-label" for="chronic1">Diabetes</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="chronic_conditions"
+                                                value="hypertension" id="chronic2">
+                                            <label class="form-check-label" for="chronic2">Hypertension</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="chronic_conditions"
+                                                value="asthma" id="chronic3">
+                                            <label class="form-check-label" for="chronic3">Asthma</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="chronic_conditions"
+                                                value="heart_disease" id="chronic4">
+                                            <label class="form-check-label" for="chronic4">Heart Disease</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="chronic_conditions"
+                                                value="autoimmune" id="chronic5">
+                                            <label class="form-check-label" for="chronic5">Autoimmune Disorder</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="chronic_conditions"
+                                                value="none" id="chronic6">
+                                            <label class="form-check-label" for="chronic6">None</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-lg px-5 py-3 rounded-xl" id="submitBtn">
+                            <i class="fas fa-chart-line mr-2"></i>Get My Results
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Results Modal -->
+                <div class="modal fade" id="resultsModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content rounded-3xl border-0 shadow-2xl">
+                            <div class="modal-header bg-gradient-to-r from-blue-600 to-indigo-700 text-white border-0">
+                                <h3 class="modal-title font-bold">
+                                    <i class="fas fa-file-medical-alt mr-2"></i>Assessment Results
+                                </h3>
+                                <button type="button" class="btn-close btn-close-white"
+                                    data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body p-5" id="resultsContent">
+                                <!-- Results will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const form = document.getElementById('assessmentForm');
+    const progressBar = document.getElementById('progressBar');
+    const formProgress = document.getElementById('formProgress');
+    const severityRange = document.getElementById('severityRange');
+    const severityValue = document.getElementById('severityValue');
+    const familyYes = document.getElementById('familyYes');
+    const familyNo = document.getElementById('familyNo');
+    const familyDisordersSection = document.getElementById('familyDisordersSection');
+
+    // Update severity display
+    severityRange.addEventListener('input', (e) => {
+        severityValue.textContent = e.target.value;
+        updateProgress();
+    });
+
+    // Show/hide family disorders section
+    familyYes.addEventListener('change', () => {
+        familyDisordersSection.style.display = 'block';
+        updateProgress();
+    });
+
+    familyNo.addEventListener('change', () => {
+        familyDisordersSection.style.display = 'none';
+        updateProgress();
+    });
+
+    // Update progress on form changes
+    form.addEventListener('change', updateProgress);
+    form.addEventListener('input', updateProgress);
+
+    function updateProgress() {
+        const formData = new FormData(form);
+        let filledFields = 0;
+        let totalFields = 8; // age, gender, ethnicity, height, weight, symptoms, family_history, lifestyle
+
+        // Personal Information (5 fields)
+        if (formData.get('age')) filledFields++;
+        if (formData.get('gender')) filledFields++;
+        if (formData.get('ethnicity')) filledFields++;
+        if (formData.get('height')) filledFields++;
+        if (formData.get('weight')) filledFields++;
+
+        // Symptoms (count as 1 if any selected)
+        if (formData.getAll('symptoms').length > 0) filledFields++;
+
+        // Family History
+        if (formData.get('has_family_history')) filledFields++;
+
+        // Lifestyle (count as 1 if any filled)
+        if (formData.get('smoking_status') || formData.get('alcohol_consumption') ||
+            formData.get('exercise_frequency') || formData.get('previous_testing')) {
+            filledFields++;
+        }
+
+        const progress = Math.round((filledFields / totalFields) * 100);
+        progressBar.style.width = progress + '%';
+        formProgress.textContent = progress + '%';
+    }
+
+    // Handle form submission
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Analyzing...';
+
+        const formData = new FormData(form);
+        const data = {
+            patient_name: formData.get('patient_name'),  // ← ADDED THIS LINE
+            age: parseInt(formData.get('age')),
+            gender: formData.get('gender'),
+            ethnicity: formData.get('ethnicity'),
+            height: parseInt(formData.get('height')),
+            weight: parseInt(formData.get('weight')),
+            symptoms: formData.getAll('symptoms'),
+            symptom_onset: formData.get('symptom_onset'),
+            symptom_severity: parseInt(formData.get('symptom_severity')),
+            has_family_history: formData.get('has_family_history') === 'yes',
+            family_disorders: formData.getAll('family_disorders'),
+            affected_relatives: formData.getAll('affected_relatives'),
+            smoking_status: formData.get('smoking_status'),
+            alcohol_consumption: formData.get('alcohol_consumption'),
+            exercise_frequency: formData.get('exercise_frequency'),
+            previous_testing: formData.get('previous_testing'),
+            chronic_conditions: formData.getAll('chronic_conditions')
+        };
+
+        // Debug: Log the data being sent
+        console.log('Sending data with patient_name:', data.patient_name);
+
+        try {
+            const response = await fetch('/api/predict-form', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            displayResults(result);
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error getting prediction. Please try again.');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-chart-line mr-2"></i>Get My Results';
+        }
+    });
+
+    function displayResults(data) {
+        const riskColor = data.risk_level === 'Low' ? 'success' :
+            data.risk_level === 'Moderate' ? 'warning' : 'danger';
+
+        const resultsHTML = `
+        <div class="text-center mb-4">
+            <div class="bg-${riskColor} bg-opacity-10 w-24 h-24 rounded-full d-flex align-items-center justify-content-center mx-auto mb-3">
+                <i class="fas fa-heartbeat text-${riskColor} text-5xl"></i>
+            </div>
+            <h3 class="font-bold text-2xl mb-2">${data.disorder}</h3>
+            <span class="badge bg-${riskColor} px-4 py-2 text-lg">${data.risk_level} Risk</span>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-6">
+                <div class="card bg-light border-0 p-3 text-center">
+                    <h5 class="font-bold text-3xl text-${riskColor} mb-1">${data.risk_score}%</h5>
+                    <p class="text-sm text-gray-600 mb-0">Risk Score</p>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card bg-light border-0 p-3 text-center">
+                    <h5 class="font-bold text-3xl text-blue-600 mb-1">${data.confidence}%</h5>
+                    <p class="text-sm text-gray-600 mb-0">Confidence</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <h5 class="font-bold mb-3"><i class="fas fa-clipboard-list text-blue-600 mr-2"></i>Recommendations</h5>
+            <ul class="list-group">
+                ${data.recommendations.map(rec => `
+                    <li class="list-group-item border-0 bg-light mb-2 rounded-xl">
+                        <i class="fas fa-check-circle text-green-600 mr-2"></i>${rec}
+                    </li>
+                `).join('')}
+            </ul>
+        </div>
+        
+        <div class="text-center">
+            <a href="/api/download-report/${data.assessment_id}" class="btn btn-primary btn-lg px-5 rounded-xl">
+                <i class="fas fa-download mr-2"></i>Download Full Report
+            </a>
+            <a href="/dashboard" class="btn btn-outline-primary btn-lg px-5 rounded-xl ml-2">
+                <i class="fas fa-home mr-2"></i>Go to Dashboard
+            </a>
+        </div>
+    `;
+
+        document.getElementById('resultsContent').innerHTML = resultsHTML;
+        const modal = new bootstrap.Modal(document.getElementById('resultsModal'));
+        modal.show();
+    }
+</script>
+{% endblock %}
