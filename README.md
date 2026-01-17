@@ -214,7 +214,6 @@ Access advanced features through:
 - Family history pattern recognition
 - Age and demographic factors
 - Lifestyle and environmental variables
-- Ethnicity-based risk adjustments
 
 ### Model Performance
 - Confidence scoring for predictions
