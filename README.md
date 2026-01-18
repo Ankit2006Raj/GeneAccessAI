@@ -38,7 +38,6 @@ GeneAccessAI is a cutting-edge web application that leverages ensemble machine l
 #### 🌍 Ethnicity Risk Adjuster
 - Population-specific risk calculations
 - 7 major ethnic groups supported
-- Real CDC/WHO data integration
 - 50+ genetic disorders database
 
 #### 🧬 Genomic Profile Generator
