@@ -62,10 +62,6 @@ GeneAccessAI is a cutting-edge web application that leverages ensemble machine l
 - Lifestyle impact assessment
 - Stress and mental health considerations
 
-#### 🔄 Inheritance Simulator
-- Genetic inheritance probability calculator
-- Autosomal and X-linked pattern simulation
-- Family planning insights
 
 ### 📊 Assessment Methods
 
