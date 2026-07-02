@@ -118,7 +118,6 @@ class EnsembleGeneticPredictor:
         
         print("Training Logistic Regression (baseline)...")
         lr_model = LogisticRegression(
-            multi_class='multinomial',
             max_iter=1000,
             random_state=42
         )
