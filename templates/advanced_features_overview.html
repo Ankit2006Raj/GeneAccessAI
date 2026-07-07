@@ -2,307 +2,397 @@
 
 {% block title %}Advanced Features - GeneAccessAI{% endblock %}
 
-{% block content %}
-<div class="container py-5">
-    <!-- Hero Section -->
-    <div class="text-center mb-5">
-        <div class="d-inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-full mb-4">
-            <i class="fas fa-rocket mr-2"></i>
-            <span class="fw-bold">INDUSTRY-LEVEL FEATURES</span>
-        </div>
-        <h1 class="display-3 fw-bold mb-3">
-            Advanced Genetic Analysis
-        </h1>
-        <p class="lead text-muted mb-4">
-            Professional-grade features that rival commercial platforms like 23andMe
-        </p>
-        <div class="d-flex justify-content-center gap-3 flex-wrap">
-            <span class="badge bg-success px-3 py-2">
-                <i class="fas fa-check-circle mr-1"></i> 5 Pro Features
-            </span>
-            <span class="badge bg-info px-3 py-2">
-                <i class="fas fa-bolt mr-1"></i> AI-Powered
-            </span>
-            <span class="badge bg-warning text-dark px-3 py-2">
-                <i class="fas fa-star mr-1"></i> Industry-Grade
-            </span>
-        </div>
-    </div>
-
-    <!-- Features Grid -->
-    <div class="row g-4 mb-5">
-        <!-- Risk Timeline -->
-        <div class="col-lg-6">
-            <div class="card border-0 shadow-lg h-100 hover-lift">
-                <div class="card-header bg-gradient-to-r from-blue-500 to-blue-600 text-white py-4">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div>
-                            <h4 class="mb-1">
-                                <i class="fas fa-chart-line mr-2"></i>
-                                Risk Timeline
-                            </h4>
-                            <small>Future Risk Projections</small>
-                        </div>
-                        <span class="badge bg-success">NEW</span>
-                    </div>
-                </div>
-                <div class="card-body p-4">
-                    <p class="text-muted mb-4">
-                        AI-generated personal genetic risk timeline with future projections, lifestyle simulations, and
-                        what-if scenario analysis.
-                    </p>
-                    <ul class="list-unstyled mb-4">
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success mr-2"></i>
-                            5, 10, 20-year risk projections
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success mr-2"></i>
-                            Lifestyle impact simulations
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success mr-2"></i>
-                            What-if scenario analysis
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success mr-2"></i>
-                            Critical milestone identification
-                        </li>
-                    </ul>
-                    <a href="/risk-timeline" class="btn btn-primary w-100">
-                        <i class="fas fa-arrow-right mr-2"></i>
-                        Explore Risk Timeline
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Family Pedigree -->
-        <div class="col-lg-6">
-            <div class="card border-0 shadow-lg h-100 hover-lift">
-                <div class="card-header bg-gradient-to-r from-green-500 to-green-600 text-white py-4">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div>
-                            <h4 class="mb-1">
-                                <i class="fas fa-sitemap mr-2"></i>
-                                Family Pedigree AI
-                            </h4>
-                            <small>Inheritance Pattern Analysis</small>
-                        </div>
-                        <span class="badge bg-success">NEW</span>
-                    </div>
-                </div>
-                <div class="card-body p-4">
-                    <p class="text-muted mb-4">
-                        Automatic pedigree chart builder with AI-powered genetic inheritance pattern detection and risk
-                        colorization.
-                    </p>
-                    <ul class="list-unstyled mb-4">
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success mr-2"></i>
-                            Multi-generation family trees
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success mr-2"></i>
-                            5 inheritance pattern detection
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success mr-2"></i>
-                            Risk color coding
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success mr-2"></i>
-                            Carrier probability calculations
-                        </li>
-                    </ul>
-                    <a href="/family-pedigree" class="btn btn-success w-100">
-                        <i class="fas fa-arrow-right mr-2"></i>
-                        Build Pedigree Chart
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Ethnicity Risk Adjuster -->
-        <div class="col-lg-4">
-            <div class="card border-0 shadow-lg h-100 hover-lift">
-                <div class="card-header bg-gradient-to-r from-purple-500 to-purple-600 text-white py-4">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div>
-                            <h5 class="mb-1">
-                                <i class="fas fa-globe-americas mr-2"></i>
-                                Ethnicity Risk
-                            </h5>
-                        </div>
-                        <span class="badge bg-warning text-dark">PRO</span>
-                    </div>
-                </div>
-                <div class="card-body p-4">
-                    <p class="text-muted mb-3">
-                        Population-level genetic risk adjustment based on ethnicity-specific disease prevalence.
-                    </p>
-                    <ul class="list-unstyled mb-4 small">
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success mr-2"></i>
-                            7 major ethnicities
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success mr-2"></i>
-                            50+ disorders
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success mr-2"></i>
-                            Real CDC/WHO data
-                        </li>
-                    </ul>
-                    <a href="/ethnicity-risk" class="btn btn-purple w-100"
-                        style="background-color: #9333ea; color: white;">
-                        <i class="fas fa-arrow-right mr-2"></i>
-                        Adjust Risk
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Genomic Profile -->
-        <div class="col-lg-4">
-            <div class="card border-0 shadow-lg h-100 hover-lift">
-                <div class="card-header bg-gradient-to-r from-indigo-500 to-indigo-600 text-white py-4">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div>
-                            <h5 class="mb-1">
-                                <i class="fas fa-dna mr-2"></i>
-                                Genomic Profile
-                            </h5>
-                        </div>
-                        <span class="badge bg-warning text-dark">PRO</span>
-                    </div>
-                </div>
-                <div class="card-body p-4">
-                    <p class="text-muted mb-3">
-                        AI-powered synthetic genomic profile generation without DNA testing.
-                    </p>
-                    <ul class="list-unstyled mb-4 small">
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success mr-2"></i>
-                            12+ gene analysis
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success mr-2"></i>
-                            Pathway mapping
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success mr-2"></i>
-                            Pharmacogenomics
-                        </li>
-                    </ul>
-                    <a href="/genomic-profile" class="btn btn-indigo w-100"
-                        style="background-color: #4f46e5; color: white;">
-                        <i class="fas fa-arrow-right mr-2"></i>
-                        Generate Profile
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Clinical Tests -->
-        <div class="col-lg-4">
-            <div class="card border-0 shadow-lg h-100 hover-lift">
-                <div class="card-header bg-gradient-to-r from-red-500 to-red-600 text-white py-4">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div>
-                            <h5 class="mb-1">
-                                <i class="fas fa-flask mr-2"></i>
-                                Clinical Tests
-                            </h5>
-                        </div>
-                        <span class="badge bg-warning text-dark">PRO</span>
-                    </div>
-                </div>
-                <div class="card-body p-4">
-                    <p class="text-muted mb-3">
-                        AI lab order assistant with test recommendations and cost estimates.
-                    </p>
-                    <ul class="list-unstyled mb-4 small">
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success mr-2"></i>
-                            30+ clinical tests
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success mr-2"></i>
-                            Cost estimates
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success mr-2"></i>
-                            Insurance predictions
-                        </li>
-                    </ul>
-                    <a href="/clinical-tests" class="btn btn-danger w-100">
-                        <i class="fas fa-arrow-right mr-2"></i>
-                        Get Recommendations
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Why These Features Matter -->
-    <div class="card border-0 shadow-lg mb-5">
-        <div class="card-body p-5">
-            <h2 class="text-center fw-bold mb-4">
-                <i class="fas fa-star text-warning mr-2"></i>
-                Why These Features Are Industry-Level
-            </h2>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="text-center">
-                        <div class="bg-blue-100 text-blue-600 rounded-circle p-4 d-inline-block mb-3">
-                            <i class="fas fa-database fa-2x"></i>
-                        </div>
-                        <h5 class="fw-bold">Real Data</h5>
-                        <p class="text-muted">Uses actual epidemiological data from CDC, WHO, and NIH</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="text-center">
-                        <div class="bg-green-100 text-green-600 rounded-circle p-4 d-inline-block mb-3">
-                            <i class="fas fa-microscope fa-2x"></i>
-                        </div>
-                        <h5 class="fw-bold">Scientific Accuracy</h5>
-                        <p class="text-muted">Based on published research and clinical guidelines</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="text-center">
-                        <div class="bg-purple-100 text-purple-600 rounded-circle p-4 d-inline-block mb-3">
-                            <i class="fas fa-hospital fa-2x"></i>
-                        </div>
-                        <h5 class="fw-bold">Clinical Practicality</h5>
-                        <p class="text-muted">Actionable recommendations for healthcare providers</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CTA Section -->
-    <div class="text-center">
-        <h3 class="fw-bold mb-4">Ready to Experience Professional Genetic Analysis?</h3>
-        <a href="/assessment" class="btn btn-lg btn-primary px-5">
-            <i class="fas fa-stethoscope mr-2"></i>
-            Start Your Assessment
-        </a>
-    </div>
-</div>
-
+{% block extra_css %}
 <style>
-    .hover-lift {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    .pro-hero {
+        background: radial-gradient(circle at 100% 0%, #1e1b4b 0%, #0f172a 50%, #020617 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    .pro-hero::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(99,102,241,0.05) 0%, transparent 50%);
+        animation: spin 40s linear infinite;
+        pointer-events: none;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    .glass-card {
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .glass-card:hover {
+        transform: translateY(-8px);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 40px rgba(99, 102, 241, 0.15);
+    }
+    
+    .gradient-text {
+        background: linear-gradient(135deg, #a5b4fc 0%, #e879f9 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .feature-icon-wrapper {
+        width: 56px;
+        height: 56px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+        border: 1px solid rgba(255,255,255,0.1);
+        box-shadow: inset 0 1px 1px rgba(255,255,255,0.2);
+        transition: transform 0.4s ease;
+    }
+    .glass-card:hover .feature-icon-wrapper {
+        transform: scale(1.1) rotate(8deg);
     }
 
-    .hover-lift:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+    /* Glow dots */
+    .glow-dot {
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 60%);
+        border-radius: 50%;
+        filter: blur(50px);
+        z-index: 0;
+        pointer-events: none;
+    }
+    
+    .pro-badge {
+        background: linear-gradient(90deg, #c084fc, #3b82f6);
+        padding: 4px 14px;
+        border-radius: 30px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        color: white;
+        text-transform: uppercase;
+        box-shadow: 0 2px 10px rgba(192, 132, 252, 0.3);
+    }
+
+    .btn-pro {
+        background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
+        color: white;
+        border: none;
+        padding: 14px 32px;
+        border-radius: 12px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    .btn-pro::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(135deg, #9333ea 0%, #4f46e5 100%);
+        z-index: -1;
+        transition: opacity 0.3s ease;
+        opacity: 0;
+    }
+    .btn-pro:hover::before {
+        opacity: 1;
+    }
+    .btn-pro:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(99, 102, 241, 0.5);
+        color: white;
+    }
+    
+    .btn-outline-glass {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: white;
+        padding: 14px 32px;
+        border-radius: 12px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+    }
+    .btn-outline-glass:hover {
+        background: rgba(255,255,255,0.1);
+        border-color: rgba(255,255,255,0.2);
+        color: white;
+        transform: translateY(-3px);
+    }
+
+    .feature-list li {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 0.85rem;
+        color: #9ca3af;
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+    .feature-list li i {
+        color: #10b981;
+        margin-right: 12px;
+        font-size: 0.75rem;
+        background: rgba(16, 185, 129, 0.1);
+        padding: 5px;
+        border-radius: 50%;
+        margin-top: 2px;
+    }
+    
+    /* Animation for elements */
+    .fade-up {
+        animation: fadeUp 0.8s ease forwards;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    
+    @keyframes fadeUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 </style>
+{% endblock %}
+
+{% block content %}
+<div class="pro-hero text-white min-vh-100 py-5">
+    <div class="glow-dot" style="top: -5%; left: 10%;"></div>
+    <div class="glow-dot" style="bottom: 10%; right: 5%; background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, transparent 60%);"></div>
+
+    <div class="container position-relative z-10 pt-5 mt-4">
+        <!-- Hero Section -->
+        <div class="row justify-content-center text-center mb-5 pb-5">
+            <div class="col-lg-9 fade-up">
+                <div class="d-inline-flex align-items-center mb-4 px-3 py-2 rounded-pill" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
+                    <span class="pro-badge me-3">Pro Access</span>
+                    <span class="text-gray-300 text-sm fw-medium">Experience the future of genetic analysis</span>
+                </div>
+                <h1 class="display-3 fw-bolder mb-4" style="line-height: 1.15; letter-spacing: -1px;">
+                    Unlock the Secrets of <br>
+                    <span class="gradient-text">Your DNA</span>
+                </h1>
+                <p class="lead text-gray-400 mb-5 px-md-5 fw-normal" style="font-size: 1.25rem;">
+                    Professional-grade genomic intelligence suite providing clinical insights, future risk projections, and deep ancestral tracing—powered by advanced AI.
+                </p>
+                <div class="d-flex justify-content-center gap-4 flex-wrap">
+                    <a href="/assessment" class="btn-pro">
+                        <i class="fas fa-dna me-2"></i> Get Started
+                    </a>
+                    <a href="#features" class="btn-outline-glass">
+                        Explore Features <i class="fas fa-arrow-down ms-2 opacity-75"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Grid -->
+        <div id="features" class="row g-4 mt-2">
+            
+            <!-- Risk Timeline -->
+            <div class="col-lg-6 fade-up delay-1">
+                <a href="/risk-timeline" class="glass-card rounded-4 p-4 p-md-5 h-100 d-flex flex-column text-decoration-none">
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <div class="feature-icon-wrapper text-blue-400">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <span class="badge bg-blue-500/10 text-blue-400 px-3 py-1 rounded-pill border border-blue-500/20" style="background: rgba(59,130,246,0.1);">NEW</span>
+                    </div>
+                    <h3 class="fw-bold mb-3 text-white">Risk Timeline Projection</h3>
+                    <p class="text-gray-400 mb-4 flex-grow-1" style="font-size: 1.05rem;">
+                        AI-generated personal genetic risk timeline with future projections, lifestyle simulations, and what-if scenario analysis across 5, 10, and 20 years.
+                    </p>
+                    <ul class="list-unstyled feature-list mb-4">
+                        <li><i class="fas fa-check"></i> <div>Dynamic future risk projections based on markers</div></li>
+                        <li><i class="fas fa-check"></i> <div>Lifestyle impact simulations and adjustments</div></li>
+                        <li><i class="fas fa-check"></i> <div>Critical milestone identification</div></li>
+                    </ul>
+                    <div class="text-blue-400 fw-medium d-flex align-items-center mt-auto">
+                        Explore Timeline <i class="fas fa-arrow-right ms-2 transition-transform"></i>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Family Pedigree -->
+            <div class="col-lg-6 fade-up delay-1">
+                <a href="/family-pedigree" class="glass-card rounded-4 p-4 p-md-5 h-100 d-flex flex-column text-decoration-none">
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <div class="feature-icon-wrapper text-emerald-400">
+                            <i class="fas fa-sitemap"></i>
+                        </div>
+                        <span class="badge bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-pill border border-emerald-500/20" style="background: rgba(16,185,129,0.1);">AI POWERED</span>
+                    </div>
+                    <h3 class="fw-bold mb-3 text-white">Family Pedigree AI</h3>
+                    <p class="text-gray-400 mb-4 flex-grow-1" style="font-size: 1.05rem;">
+                        Automatic pedigree chart builder with AI-powered genetic inheritance pattern detection, carrier probability calculations, and deep risk colorization.
+                    </p>
+                    <ul class="list-unstyled feature-list mb-4">
+                        <li><i class="fas fa-check"></i> <div>Multi-generation mapping and tracking</div></li>
+                        <li><i class="fas fa-check"></i> <div>5 distinct inheritance pattern detections</div></li>
+                        <li><i class="fas fa-check"></i> <div>Carrier probability modeling</div></li>
+                    </ul>
+                    <div class="text-emerald-400 fw-medium d-flex align-items-center mt-auto">
+                        Build Pedigree <i class="fas fa-arrow-right ms-2 transition-transform"></i>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Ethnicity Risk -->
+            <div class="col-lg-4 fade-up delay-2">
+                <a href="/ethnicity-risk" class="glass-card rounded-4 p-4 h-100 d-flex flex-column text-decoration-none">
+                    <div class="feature-icon-wrapper text-purple-400 mb-4">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3 text-white">Ethnicity Risk</h4>
+                    <p class="text-gray-400 mb-4 flex-grow-1">
+                        Population-level genetic risk adjustment based on ethnicity-specific disease prevalence using real CDC/WHO data.
+                    </p>
+                    <div class="text-purple-400 fw-medium d-flex align-items-center mt-auto">
+                        Adjust Risk <i class="fas fa-arrow-right ms-2"></i>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Genomic Profile -->
+            <div class="col-lg-4 fade-up delay-2">
+                <a href="/genomic-profile" class="glass-card rounded-4 p-4 h-100 d-flex flex-column text-decoration-none">
+                    <div class="feature-icon-wrapper text-indigo-400 mb-4">
+                        <i class="fas fa-dna"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3 text-white">Genomic Profile</h4>
+                    <p class="text-gray-400 mb-4 flex-grow-1">
+                        AI-powered synthetic genomic profile generation without DNA testing, including 12+ gene analysis and pharmacogenomics.
+                    </p>
+                    <div class="text-indigo-400 fw-medium d-flex align-items-center mt-auto">
+                        Generate Profile <i class="fas fa-arrow-right ms-2"></i>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Clinical Tests -->
+            <div class="col-lg-4 fade-up delay-2">
+                <a href="/clinical-tests" class="glass-card rounded-4 p-4 h-100 d-flex flex-column text-decoration-none">
+                    <div class="feature-icon-wrapper text-pink-400 mb-4">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3 text-white">Clinical Tests</h4>
+                    <p class="text-gray-400 mb-4 flex-grow-1">
+                        AI lab order assistant with test recommendations, insurance predictions, and cost estimates across 30+ panels.
+                    </p>
+                    <div class="text-pink-400 fw-medium d-flex align-items-center mt-auto">
+                        Get Recommendations <i class="fas fa-arrow-right ms-2"></i>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Psychosocial Risk -->
+            <div class="col-lg-4 fade-up delay-3">
+                <a href="/psychosocial-risk" class="glass-card rounded-4 p-4 h-100 d-flex flex-column text-decoration-none">
+                    <div class="feature-icon-wrapper text-teal-400 mb-4">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3 text-white">Psychosocial Modulator</h4>
+                    <p class="text-gray-400 mb-4 flex-grow-1">
+                        Analyze the intersection of mental health and genetics, mapping stress indicators to epigenetic expressions.
+                    </p>
+                    <div class="text-teal-400 fw-medium d-flex align-items-center mt-auto">
+                        Analyze Mind <i class="fas fa-arrow-right ms-2"></i>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Drug Reactions -->
+            <div class="col-lg-4 fade-up delay-3">
+                <a href="/drug-reactions" class="glass-card rounded-4 p-4 h-100 d-flex flex-column text-decoration-none">
+                    <div class="feature-icon-wrapper text-red-400 mb-4">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3 text-white">Drug Reactions</h4>
+                    <p class="text-gray-400 mb-4 flex-grow-1">
+                        Pharmacogenetic safety assessment predicting potential adverse drug reactions based on your profile.
+                    </p>
+                    <div class="text-red-400 fw-medium d-flex align-items-center mt-auto">
+                        Check Compatibility <i class="fas fa-arrow-right ms-2"></i>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Inheritance Simulator -->
+            <div class="col-lg-4 fade-up delay-3">
+                <a href="/inheritance-simulator" class="glass-card rounded-4 p-4 h-100 d-flex flex-column text-decoration-none">
+                    <div class="feature-icon-wrapper text-orange-400 mb-4">
+                        <i class="fas fa-baby"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3 text-white">Inheritance Simulator</h4>
+                    <p class="text-gray-400 mb-4 flex-grow-1">
+                        Predict baby's genetic risk using combinatorial genetic models to simulate potential inheritance outcomes.
+                    </p>
+                    <div class="text-orange-400 fw-medium d-flex align-items-center mt-auto">
+                        Simulate <i class="fas fa-arrow-right ms-2"></i>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Clinical Knowledge -->
+            <div class="col-lg-4 fade-up delay-3">
+                <a href="/clinical-knowledge" class="glass-card rounded-4 p-4 h-100 d-flex flex-column text-decoration-none">
+                    <div class="feature-icon-wrapper text-yellow-400 mb-4" style="color: #fbbf24;">
+                        <i class="fas fa-book-medical"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3 text-white">Clinical Knowledge</h4>
+                    <p class="text-gray-400 mb-4 flex-grow-1">
+                        Real-time medical research sync keeping you up to date with the latest clinical guidelines.
+                    </p>
+                    <div class="fw-medium d-flex align-items-center mt-auto" style="color: #fbbf24;">
+                        View Research <i class="fas fa-arrow-right ms-2"></i>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+        
+        <!-- Trust Section -->
+        <div class="mt-5 pt-5 pb-3 text-center fade-up delay-3">
+            <h6 class="text-gray-500 mb-4 fw-medium" style="letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem;">Powered by Industry-Leading Data</h6>
+            <div class="d-flex justify-content-center gap-5 flex-wrap opacity-50 grayscale" style="filter: grayscale(100%);">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-database fa-2x me-2 text-gray-400"></i>
+                    <span class="text-gray-400 fw-bold fs-5">CDC</span>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-globe fa-2x me-2 text-gray-400"></i>
+                    <span class="text-gray-400 fw-bold fs-5">WHO</span>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-microscope fa-2x me-2 text-gray-400"></i>
+                    <span class="text-gray-400 fw-bold fs-5">NIH</span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
 {% endblock %}
